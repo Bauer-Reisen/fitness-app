@@ -283,6 +283,18 @@ const vg = (stand, ctx = ctxBasis()) => vorgabeBerechnen(stand, bp, gbp, 'haupt'
   pruefe('Raste: 2× erfüllt → nächste Raste, Ziel 8', r.stand.stufenIndex === 2 && r.stand.ziel === 8, r.text);
 }
 
+{
+  // Unterstützung: mehr Gewicht = leichter, Steigerung = weniger Hilfe
+  const gr = { ...geraeteAlle().gravitron };
+  const l = kombiniert(gr);
+  pruefe('Unterstützung: Liste absteigend', l[0] > l[1]);
+  const kz = U('klimmzug_unterstuetzt');
+  const st = { ...neuerStand(kz, gr, 'haupt', ctxBasis()), erstesTraining: false, einstiegBis: HEUTE, stufenIndex: 3, ziel: 12, erfuelltInFolge: 1, letztesDatum: plusTage(HEUTE, -3) };
+  const v = vorgabeBerechnen(st, kz, gr, 'haupt', ctxBasis());
+  const r = auswerten(st, v, [satz(3, 12, 'passend'), satz(3, 12, 'passend'), satz(3, 12, 'passend')], gr, ctxBasis());
+  pruefe('Unterstützung: Steigerung = weniger Hilfe', r.stand.stufenIndex === 4 && l[4] < l[3], r.text);
+}
+
 // ---------- Körper ----------
 {
   const m = [['2026-11-25', 80], ['2026-11-26', 81], ['2026-11-28', 80.5], ['2026-11-30', 79.5], ['2026-12-01', 80]].map(([datum, wert]) => ({ art: 'gewicht', datum, wert }));

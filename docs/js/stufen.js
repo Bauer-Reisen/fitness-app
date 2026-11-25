@@ -16,7 +16,9 @@ export function kombiniert(geraet) {
   const zusatz = geraet?.zusatz?.length ? geraet.zusatz : [0];
   const set = new Set();
   for (const s of stufen) for (const z of zusatz) set.add(Math.round((s + z) * 100) / 100);
-  return [...set].sort((a, b) => a - b);
+  const liste = [...set].sort((a, b) => a - b);
+  // Unterstützung (z. B. Klimmzug-Maschine): mehr Gewicht = leichter → „nächste Stufe“ = weniger Hilfe
+  return geraet?.umgekehrt ? liste.reverse() : liste;
 }
 
 export function anzeige(geraet, index) {
@@ -25,12 +27,13 @@ export function anzeige(geraet, index) {
   if (w == null) return '';
   const zahl = String(w).replace('.', ',');
   if (geraet.art === 'ball') return `Ball ${zahl} kg`;
+  if (geraet.umgekehrt) return `Hilfe ${zahl} kg`;
   return geraet.anzeige === 'stufe' ? `Stufe ${zahl}` : `${zahl} kg`;
 }
 
 // Sprung zur nächsten Stufe als Anteil (0,1 = 10 %)
 export function sprung(geraet, index) {
   const l = kombiniert(geraet);
-  if (index < 0 || index >= l.length - 1 || !l[index]) return 0;
+  if (geraet?.umgekehrt || index < 0 || index >= l.length - 1 || !l[index]) return 0;
   return (l[index + 1] - l[index]) / l[index];
 }

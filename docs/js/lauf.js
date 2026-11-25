@@ -1,14 +1,14 @@
 // Laufendes Training: Aufwärmen → Mobilität → Übungen (Satz mit 1 Tipp, Pause) → Handprogramm → Abschluss.
 // Jeder Satz wird sofort gespeichert. Nach Unterbrechung: „Fortsetzen“. Nach 4 h automatisch beendet.
-import { alle, hole, speichere, kv, neueId, loesche } from './db.js?v=0.1.5';
-import { ladeKontext } from './kontext.js?v=0.1.5';
-import { planErstellen, folgesatz, auswerten, neuerStand, typVon, alternativen, mobilNeu, paarId, vorgabeBerechnen } from './vorschlag.js?v=0.1.5';
-import { anzeige, kombiniert } from './stufen.js?v=0.1.5';
-import { MOBILITAET, HANDPROGRAMM, MUSTER } from './katalog.js?v=0.1.5';
-import { R } from './regeln.js?v=0.1.5';
-import { esc, toast, dialog, undoBar } from './ui.js?v=0.1.5';
-import { heuteIso, monatIso, monateZwischen } from './datum.js?v=0.1.5';
-import { bewerte, mitUeberkreuzVorgabe, opHinweis, aktiv } from './gelenke.js?v=0.1.5';
+import { alle, hole, speichere, kv, neueId, loesche } from './db.js?v=0.1.6';
+import { ladeKontext } from './kontext.js?v=0.1.6';
+import { planErstellen, folgesatz, auswerten, neuerStand, typVon, alternativen, mobilNeu, paarId, vorgabeBerechnen } from './vorschlag.js?v=0.1.6';
+import { anzeige, kombiniert } from './stufen.js?v=0.1.6';
+import { MOBILITAET, HANDPROGRAMM, MUSTER } from './katalog.js?v=0.1.6';
+import { R } from './regeln.js?v=0.1.6';
+import { esc, toast, dialog, undoBar } from './ui.js?v=0.1.6';
+import { heuteIso, monatIso, monateZwischen } from './datum.js?v=0.1.6';
+import { bewerte, mitUeberkreuzVorgabe, opHinweis, aktiv } from './gelenke.js?v=0.1.6';
 
 const FEEDBACK = [
   ['easy', 'easy', 'noch 4+ Wdh. drin'],
@@ -288,7 +288,7 @@ async function uebung(view, t, s, ctx, weiter) {
       </button>
       <div class="aendern" ${v.test && nr === 1 ? '' : 'hidden'}>
         <div class="zahlzeile"><button type="button" class="rund" data-w="-1" aria-label="weniger">−</button><span>${typ === 'zeit' ? 'Sekunden' : 'Wiederholungen'}</span><button type="button" class="rund" data-w="1" aria-label="mehr">+</button></div>
-        ${typ === 'kg' || typ === 'ball' ? '<div class="zahlzeile"><button type="button" class="rund" data-s="-1" aria-label="leichter">−</button><span>Gewicht</span><button type="button" class="rund" data-s="1" aria-label="schwerer">+</button></div>' : ''}
+        ${typ === 'kg' || typ === 'ball' ? `<div class="zahlzeile"><button type="button" class="rund" data-s="-1" aria-label="leichter">−</button><span>${g.umgekehrt ? 'Schwierigkeit (+ = weniger Hilfe)' : 'Gewicht'}</span><button type="button" class="rund" data-s="1" aria-label="schwerer">+</button></div>` : ''}
       </div>
       <div class="schmerzzeile">
         <button type="button" class="btn btn-quiet klein" data-act="schmerz" aria-pressed="false">Schmerz?</button>

@@ -41,6 +41,10 @@ export const STEPS = [
 // Neueste zuerst. Nur sichtbare Neuerungen, keine Reparaturen.
 export const NEWS = [
   {
+    v: '0.1.6', karte: 'klein', title: 'Klimmzug mit Unterstützung',
+    items: ['Geräte 15 und 21 sind jetzt als <strong>Klimmzug-/Dip-Maschine mit Unterstützung</strong> drin: Mehr Gewicht heißt mehr Hilfe. Wird es leichter, nimmt die App beim nächsten Mal weniger Hilfe.'],
+  },
+  {
     v: '0.1.4', karte: 'geraete', title: 'Dein Studio ist drin',
     items: ['Unter <strong>Training → Meine Geräte</strong> stehen jetzt alle Geräte deines Studios mit ihren <strong>Nummern</strong> – auch der Gerätepark rot. Im Training siehst du, an welches Gerät du gehst, zum Beispiel „8 · Brustpresse“.', 'Beim ersten Mal an einem Gerät erinnert dich die App, die <strong>Gewichtsstufen</strong> abzulesen und einzutragen.'],
   },
