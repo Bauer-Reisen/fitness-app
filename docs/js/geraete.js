@@ -1,11 +1,11 @@
 // Meine Geräte: Vorlagen abhaken, Gewichtsstufen und Einstellungen, eigene Geräte, Übungen aus-/einblenden.
-import { alle, hole, speichere, loesche, neueId, kv } from './db.js?v=0.1.7';
-import { ladeGeraete, ladeUebungen, studioAn } from './kontext.js?v=0.1.7';
-import { BEREICHE, STUDIO_NAME } from './studio.js?v=0.1.7';
-import { MUSTER, BELASTUNGSART, GERAETE } from './katalog.js?v=0.1.7';
-import { stufenAusVorschlag, kombiniert, anzeige } from './stufen.js?v=0.1.7';
-import { paarId } from './vorschlag.js?v=0.1.7';
-import { esc, dialog, toast } from './ui.js?v=0.1.7';
+import { alle, hole, speichere, loesche, neueId, kv } from './db.js?v=0.1.8';
+import { ladeGeraete, ladeUebungen, studioAn } from './kontext.js?v=0.1.8';
+import { BEREICHE, STUDIO_NAME } from './studio.js?v=0.1.8';
+import { MUSTER, BELASTUNGSART, GERAETE } from './katalog.js?v=0.1.8';
+import { stufenAusVorschlag, kombiniert, anzeige } from './stufen.js?v=0.1.8';
+import { paarId } from './vorschlag.js?v=0.1.8';
+import { esc, dialog, toast } from './ui.js?v=0.1.8';
 
 const REIHE = ['druecken', 'ziehen', 'beine', 'rumpf', 'ausdauer'];
 
@@ -23,7 +23,7 @@ export async function render(view) {
   const anzahl = liste.filter((g) => g.vorhanden).length;
   const zeile = (g) => `
           <li>
-            <label class="check gross"><input type="checkbox" data-hab="${esc(g.id)}" ${g.vorhanden ? 'checked' : ''}><span><strong>${esc(g.name)}</strong>${!g.studio && g.aliase?.length ? `<br><span class="hint">${esc(g.aliase.join(', '))}</span>` : ''}${g.eigen ? ' <span class="tag">eigen</span>' : ''}${g.studio && (g.art === 'kg') && !g.stufenGeprueft && g.vorhanden ? '<br><span class="hint">Gewichtsstufen noch prüfen</span>' : ''}</span></label>
+            <label class="check zeile"><input type="checkbox" data-hab="${esc(g.id)}" ${g.vorhanden ? 'checked' : ''}>${g.studio && g.nr != null ? `<span class="nr ${g.bereich === 'rot' ? 'rot' : ''}">${g.nr}</span>` : ''}<span><strong>${esc(g.studio ? g.kurzname : g.name)}</strong>${!g.studio && g.aliase?.length ? `<br><span class="hint">${esc(g.aliase.join(', '))}</span>` : ''}${g.eigen ? ' <span class="tag">eigen</span>' : ''}${g.studio && (g.art === 'kg') && !g.stufenGeprueft && g.vorhanden ? '<br><span class="hint">Stufen noch prüfen</span>' : ''}</span></label>
             <a class="btn klein" href="#/geraet/${encodeURIComponent(g.id)}">Einstellen</a>
           </li>`;
   const nachMuster = (arr) => REIHE.map((m) => {
@@ -108,7 +108,7 @@ export async function renderGeraet(view, id) {
     <section>
       <a class="back" href="#/geraete">← Meine Geräte</a>
       <h1 class="title title-sm">${esc(g.name)}</h1>
-      <label class="check gross"><input type="checkbox" id="hab" ${g.vorhanden ? 'checked' : ''}><span>Gibt es in meinem Studio</span></label>
+      <label class="check zeile"><input type="checkbox" id="hab" ${g.vorhanden ? 'checked' : ''}><span>Gibt es in meinem Studio</span></label>
 
       ${hatStufen ? `
         <div class="card">

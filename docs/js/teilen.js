@@ -1,6 +1,6 @@
 // „App weitergeben": QR-Code zum Abscannen und Teilen-Knopf. Weitergegeben wird nur der Link – keine Daten.
-import { toast } from './ui.js?v=0.1.7';
-import { APP_URL } from './config.js?v=0.1.7';
+import { toast } from './ui.js?v=0.1.8';
+import { APP_URL } from './config.js?v=0.1.8';
 
 const TEXT = 'Meine Fitness-App fürs Studio – öffnen und zum Home-Bildschirm hinzufügen. Deine Daten bleiben nur auf deinem Handy:';
 

@@ -1,7 +1,7 @@
 // Supplement-Prüfliste: nur ansehen und selbst entscheiden. Die App schlägt nichts von sich aus vor.
-import { kv } from './db.js?v=0.1.7';
-import { PRUEFLISTE, NUR_BEI_MANGEL, AUSSCHLUSS, EIWEISSPULVER, STAND } from './supplemente.js?v=0.1.7';
-import { esc } from './ui.js?v=0.1.7';
+import { kv } from './db.js?v=0.1.8';
+import { PRUEFLISTE, NUR_BEI_MANGEL, AUSSCHLUSS, EIWEISSPULVER, STAND } from './supplemente.js?v=0.1.8';
+import { esc } from './ui.js?v=0.1.8';
 
 const link = (q) => `<a href="${esc(q.url)}" target="_blank" rel="noopener">${esc(q.text)}</a>`;
 

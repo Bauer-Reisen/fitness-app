@@ -33,6 +33,8 @@ Für eine neue Sitzung: zuerst diese Datei lesen, dann bei Bedarf [ANFORDERUNGEN
 
 - **0.1.7** (25.11.2026): Geräteseite zeigt Stufenfelder bei Unterstützung aufsteigend (vorher Kleinste/Größte vertauscht).
 
+- **0.1.8** (25.11.2026): Geräteliste kompakt: Nummer als Kästchen, normale Schriftgröße (Klasse `check gross` kollidierte mit `.gross` aus dem Training → `check zeile`).
+
 ## Als Nächstes
 - `main` + Pages einschalten, dann am iPhone testen (Home-Bildschirm, Wake Lock ab iOS 18.4, Offline im Studio).
 - Prüfpunkte vor/bei Abnahme: ANFORDERUNGEN.md Abschnitt 4 (u. a. Gerätemerkmale im Studio prüfen, Vorgaben zur Hüftprothese erfragen).

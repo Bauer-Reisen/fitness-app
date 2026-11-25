@@ -1,14 +1,14 @@
 // Laufendes Training: Aufwärmen → Mobilität → Übungen (Satz mit 1 Tipp, Pause) → Handprogramm → Abschluss.
 // Jeder Satz wird sofort gespeichert. Nach Unterbrechung: „Fortsetzen“. Nach 4 h automatisch beendet.
-import { alle, hole, speichere, kv, neueId, loesche } from './db.js?v=0.1.7';
-import { ladeKontext } from './kontext.js?v=0.1.7';
-import { planErstellen, folgesatz, auswerten, neuerStand, typVon, alternativen, mobilNeu, paarId, vorgabeBerechnen } from './vorschlag.js?v=0.1.7';
-import { anzeige, kombiniert } from './stufen.js?v=0.1.7';
-import { MOBILITAET, HANDPROGRAMM, MUSTER } from './katalog.js?v=0.1.7';
-import { R } from './regeln.js?v=0.1.7';
-import { esc, toast, dialog, undoBar } from './ui.js?v=0.1.7';
-import { heuteIso, monatIso, monateZwischen } from './datum.js?v=0.1.7';
-import { bewerte, mitUeberkreuzVorgabe, opHinweis, aktiv } from './gelenke.js?v=0.1.7';
+import { alle, hole, speichere, kv, neueId, loesche } from './db.js?v=0.1.8';
+import { ladeKontext } from './kontext.js?v=0.1.8';
+import { planErstellen, folgesatz, auswerten, neuerStand, typVon, alternativen, mobilNeu, paarId, vorgabeBerechnen } from './vorschlag.js?v=0.1.8';
+import { anzeige, kombiniert } from './stufen.js?v=0.1.8';
+import { MOBILITAET, HANDPROGRAMM, MUSTER } from './katalog.js?v=0.1.8';
+import { R } from './regeln.js?v=0.1.8';
+import { esc, toast, dialog, undoBar } from './ui.js?v=0.1.8';
+import { heuteIso, monatIso, monateZwischen } from './datum.js?v=0.1.8';
+import { bewerte, mitUeberkreuzVorgabe, opHinweis, aktiv } from './gelenke.js?v=0.1.8';
 
 const FEEDBACK = [
   ['easy', 'easy', 'noch 4+ Wdh. drin'],

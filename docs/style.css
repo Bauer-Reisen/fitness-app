@@ -123,7 +123,9 @@ input:focus, select:focus { outline: 3px solid var(--accent); outline-offset: 1p
 .drei-spalten label { margin: 0; font-size: .9rem; }
 .check { display: flex; align-items: center; gap: 12px; min-height: 48px; font-weight: 600; cursor: pointer; }
 .check input { width: 24px; height: 24px; flex: none; accent-color: var(--accent); }
-.check.gross { flex: 1; font-weight: 400; }
+.check.zeile { flex: 1; font-weight: 400; gap: 10px; }
+.nr { flex: none; min-width: 2.2em; height: 2.2em; padding: 0 4px; border-radius: 8px; display: grid; place-items: center; font-weight: 800; background: var(--card-2); border: 1px solid var(--line); }
+.nr.rot { background: #ffe3d1; border-color: #f08a4b; color: #8a3a06; }
 .vorgaben { border: 1px solid var(--line); border-radius: 12px; padding: 8px 12px; margin: 14px 0 0; }
 .vorgaben legend { font-weight: 650; padding: 0 4px; font-size: .95rem; }
 .frage { border-bottom: 1px solid var(--line); padding: 6px 0 2px; }
@@ -256,7 +258,7 @@ input:focus, select:focus { outline: 3px solid var(--accent); outline-offset: 1p
 
 /* Nichts darf über den Rand ragen: lange Texte umbrechen statt schieben */
 .liste > li > * { min-width: 0; }
-.liste > li > span, .check.gross span { overflow-wrap: anywhere; }
+.liste > li > span, .check.zeile span { overflow-wrap: break-word; hyphens: auto; }
 .liste > li > .btn, .liste > li > .knoepfe { flex: none; }
 .seg .btn, .wahl .btn { min-width: 0; white-space: normal; line-height: 1.2; }
 .btn { max-width: 100%; }

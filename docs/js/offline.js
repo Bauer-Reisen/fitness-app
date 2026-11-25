@@ -1,6 +1,6 @@
 // Offline: Service Worker anmelden und anzeigen, ob alles auf dem Handy gespeichert ist.
-import { VERSION } from './config.js?v=0.1.7';
-import { store } from './store.js?v=0.1.7';
+import { VERSION } from './config.js?v=0.1.8';
+import { store } from './store.js?v=0.1.8';
 
 const LOCAL = ['localhost', '127.0.0.1'].includes(location.hostname);
 // Am PC normalerweise aus (sonst sieht man Änderungen nicht). Zum Testen: Adresse mit ?sw=1 öffnen.
