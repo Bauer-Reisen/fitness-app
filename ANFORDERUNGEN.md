@@ -1,7 +1,7 @@
 # Fitness-App – Anforderungen
 
 Stand: 23.11.2026. Planung, noch nichts gebaut.
-Grundlage: Berichte der Agenten A–H in [`grundlagen/`](grundlagen/) (F = Kritik), Runde 2: I (Training bei Gelenkerkrankungen), J (Gesundheitsabfrage, Startprofil), F2 (Kritik). Bei Widersprüchen gilt die Auflösung von F bzw. F2, sofern unten nicht anders vermerkt.
+Grundlage: Berichte der Agenten A–H in [`planung/grundlagen/`](planung/grundlagen/) (F = Kritik), Runde 2: I (Training bei Gelenkerkrankungen), J (Gesundheitsabfrage, Startprofil), F2 (Kritik). Bei Widersprüchen gilt die Auflösung von F bzw. F2, sofern unten nicht anders vermerkt.
 Persönliche Gesundheitsangaben stehen nie im Repository, nur im Gerät.
 Kennzeichnung: **(ungeprüft)** = Faustregel oder Fakt ohne geprüfte Quelle; vor dem Bau bzw. im Test bestätigen.
 
@@ -43,7 +43,7 @@ Rahmen: reine Web-App (HTML/CSS/JS) auf GitHub Pages, zum Home-Bildschirm hinzug
 - Hinweis beim Backup: „Die Datei enthält Gesundheitsangaben.“ Knopf „Gesundheitsangaben löschen“.
 
 **Gerätekatalog**
-- 30 Vorlagen (Maschinen, Seilzug, Klimmzugstange, Dipstangen, Hyperextension-Bank, Boden, Medizin-/Gewichtsball, 5 Ausdauergeräte) mit Alternativnamen und zugeordneten Übungen (Tabelle in [`grundlagen/C.md`](grundlagen/C.md)). Abhaken „im Studio vorhanden“.
+- 30 Vorlagen (Maschinen, Seilzug, Klimmzugstange, Dipstangen, Hyperextension-Bank, Boden, Medizin-/Gewichtsball, 5 Ausdauergeräte) mit Alternativnamen und zugeordneten Übungen (Tabelle in [`planung/grundlagen/C.md`](planung/grundlagen/C.md)). Abhaken „im Studio vorhanden“.
 - Eigenes Gerät: Pflicht nur Name, Muster, Belastungsart; oder „wie Gerät X“ kopieren.
 - Gewichtsstufen je Gerät als Liste (aus Start/Schritt/Max erzeugt oder frei eingegeben), Anzeige wie am Gerät („35 kg“ oder „Platte 7“).
 
@@ -75,7 +75,7 @@ Rahmen: reine Web-App (HTML/CSS/JS) auf GitHub Pages, zum Home-Bildschirm hinzug
 ### Später
 - Training: zwei Plan-Varianten im Wechsel (A/B), Oberkörper/Unterkörper-Split ab ca. 4 Trainings pro Woche, Klimmzug-/Dip-Leiter (Negative → volle Wdh.), automatisches Deload, Übungstausch bei Stagnation, Testsätze zum Finden des Startgewichts, Aufwärmsatz-Berechnung, Supersätze, Ausführungsbilder, Ton beim Pausenende, Händigkeit.
 - Muskelkater 4 Stufen mit „Muster ersetzen“, Tagesform-Abfrage vor dem Training.
-- Gelenke: Freitext-Stichwortsuche, die passende Einschränkungen zum Bestätigen vorschlägt (Liste in `grundlagen/J.md`); schnellere Steigerung bei früherer Erfahrung bis zum früheren Niveau; Zughilfen und Orthese als „habe ich“ mit Wirkung; Schmerz 0–10 im Alltag mit Verlauf; Seitentrennung bei einbeinigen Übungen; gespeicherte Anschläge je Gerät („Beinpresse ab Loch 5“); Gummiband/Knetball als Hilfsmittel mit Stufen; Funktionstests als Verlauf (30-Sekunden-Aufstehen, Einbeinstand); Ausführungsbilder. Lokales Sprachmodell für Freitext: geprüft, nicht vorgesehen (Aufwand, iPhone-Speicher).
+- Gelenke: Freitext-Stichwortsuche, die passende Einschränkungen zum Bestätigen vorschlägt (Liste in `planung/grundlagen/J.md`); schnellere Steigerung bei früherer Erfahrung bis zum früheren Niveau; Zughilfen und Orthese als „habe ich“ mit Wirkung; Schmerz 0–10 im Alltag mit Verlauf; Seitentrennung bei einbeinigen Übungen; gespeicherte Anschläge je Gerät („Beinpresse ab Loch 5“); Gummiband/Knetball als Hilfsmittel mit Stufen; Funktionstests als Verlauf (30-Sekunden-Aufstehen, Einbeinstand); Ausführungsbilder. Lokales Sprachmodell für Freitext: geprüft, nicht vorgesehen (Aufwand, iPhone-Speicher).
 - Gerätekatalog als Datei an einen zweiten Nutzer weitergeben (ohne Gesundheits- und Trainingsdaten).
 - Körper: Taille/Größe-Hinweis (NICE: ab 0,5 erhöht) und Taillen-Grenzwerte (WHO: Männer ab 94 / 102 cm) als neutraler Hinweis; Fotos.
 - Ernährung: Kalorienziel am Gewichtstrend nachjustieren (Regel steht schon fest, Abschnitt 1b); Barcode-Scan mit Open Food Facts; größere Lebensmittelliste aus dem Bundeslebensmittelschlüssel (BLS 4.0, Lizenz klären); Unverträglichkeiten als Filter-Tags; Handmaß-Portionen; Mahlzeit-Vorlagen aus mehreren Zutaten; Fett/Kohlenhydrate.
@@ -112,7 +112,7 @@ Quellen: ACSM Position Stand 2009 (Progression Models), WHO-Leitlinien 2020, Sch
 - Grundumsatz Mifflin-St Jeor (Mifflin et al. 1990, Am J Clin Nutr 51:241), Mann: 10 × kg + 6,25 × cm − 5 × Alter + 5. Gewicht = 7-Tage-Mittel, Alter aus Geburtsdatum.
 - Pausentag = Grundumsatz × Alltagsfaktor (sitzend 1,4 · teils gehend 1,6 · körperlich arbeitend 1,8; Sport nicht eingerechnet). Stufen an den PAL-Werten der DGE ausrichten **(ungeprüft)**.
 - Trainingstag = Pausentag + (MET − 1) × kg × Stunden; Dauer aus dem erfassten Training, sonst 60 Min.; MET für Gerätetraining ca. 5 **(ungeprüft, im Compendium of Physical Activities nachsehen)**. Ein Tag gilt als Trainingstag, sobald ein Training gestartet ist oder der Nutzer „heute trainiere ich noch“ antippt.
-- Ziele: Halten ±0 kcal, 1,6 g Eiweiß/kg · Aufbau +10 %, 1,8 g/kg · Abnehmen −20 % (höchstens −500 kcal), 2,0 g/kg. Eiweiß: ISSN Position Stand Jäger et al. 2017 (1,4–2,0 g/kg), Morton et al. 2018 (Nutzen flacht ab ca. 1,6 g/kg ab). Untergrenze DGE 0,8 g/kg. Die Prozentwerte für kcal sind übliche Praxis **(ungeprüft)**.
+- Ziele: **Fett ab, Muskeln auf (Rekomposition, Standard)** −10 % (höchstens −300 kcal), 2,0 g Eiweiß/kg – gleichzeitiger Fettabbau und Muskelaufbau ist auch bei Trainierten belegt (Barakat et al. 2020, Strength Cond J 42(5):7–21; die Prozentwerte sind übliche Praxis **(ungeprüft)**); Erfolg zeigt sich an etwa gleichem Gewicht und schmalerer Taille · Halten ±0 kcal, 1,6 g Eiweiß/kg · Aufbau +10 %, 1,8 g/kg · Abnehmen −20 % (höchstens −500 kcal), 2,0 g/kg. Eiweiß: ISSN Position Stand Jäger et al. 2017 (1,4–2,0 g/kg), Morton et al. 2018 (Nutzen flacht ab ca. 1,6 g/kg ab). Untergrenze DGE 0,8 g/kg. Die Prozentwerte für kcal sind übliche Praxis **(ungeprüft)**.
 - Eiweiß an Trainings- und Pausentagen gleich; der Unterschied liegt bei den kcal.
 - Rundung auf 50 kcal und 5 g Eiweiß. Untergrenze kcal = Grundumsatz.
 - Später, Nachjustieren: erste Anpassung frühestens 21 Tage nach Start (und nach Beginn von Kreatin, wegen Wasser); dann Wochenmittel jetzt gegen vor 14 Tagen; Vorschlag ±150 kcal, nur mit Bestätigung, frühestens 14 Tage nach der letzten Änderung.
@@ -121,9 +121,9 @@ Quellen: ACSM Position Stand 2009 (Progression Models), WHO-Leitlinien 2020, Sch
 
 Grundsatz: Die App urteilt nicht medizinisch und setzt keine eigenen Fristen nach Operationen. Sie filtert und markiert Übungen nach den eigenen Angaben, schlägt gezielte Übungen vor und verweist auf ärztliche bzw. physiotherapeutische Vorgaben. Alles automatisch Ausgeblendete ist als „vorsorglich ausgeblendet“ gekennzeichnet und mit einem Tipp wieder einblendbar. Nicht verwendete Wörter: „sicher“, „gelenkschonend“, „geeignet bei Arthrose“, „Therapie“.
 
-Quellen: Bewegungstraining bei Hüft- und Handarthrose stark empfohlen (ACR/AF 2019, Kolasinski et al. 2020; OARSI 2019, Bannuru et al.; EULAR 2018, Rausch Osthoff et al.; EULAR Handarthrose, Kloppenburg et al. 2019). Training senkt Hüftschmerz und verbessert die Funktion im Mittel wenig bis mäßig (Cochrane, Fransen et al. 2014); Gerätekrafttraining wirkt ähnlich wie neuromuskuläres Training (Ann Intern Med 2024). Übungen vor einer Hüft-OP verbessern Schmerz und Funktion klein bis mittel (Gill & McBurney 2013, Moyer et al. 2017). Schmerzgrenzen nach dem Modell aus NEMEX-TJR (Ageberg et al. 2010). Klassische Vorsichtsregeln nach Hüft-TEP zeigen keinen klaren Einfluss auf Luxationen (Crompton et al. 2020) – deshalb gelten nur die Vorgaben, die der Nutzer einträgt. Fester Faustschluss belastet das Daumensattelgelenk am stärksten (biomechanische Übersichten, `grundlagen/I.md`).
+Quellen: Bewegungstraining bei Hüft- und Handarthrose stark empfohlen (ACR/AF 2019, Kolasinski et al. 2020; OARSI 2019, Bannuru et al.; EULAR 2018, Rausch Osthoff et al.; EULAR Handarthrose, Kloppenburg et al. 2019). Training senkt Hüftschmerz und verbessert die Funktion im Mittel wenig bis mäßig (Cochrane, Fransen et al. 2014); Gerätekrafttraining wirkt ähnlich wie neuromuskuläres Training (Ann Intern Med 2024). Übungen vor einer Hüft-OP verbessern Schmerz und Funktion klein bis mittel (Gill & McBurney 2013, Moyer et al. 2017). Schmerzgrenzen nach dem Modell aus NEMEX-TJR (Ageberg et al. 2010). Klassische Vorsichtsregeln nach Hüft-TEP zeigen keinen klaren Einfluss auf Luxationen (Crompton et al. 2020) – deshalb gelten nur die Vorgaben, die der Nutzer einträgt. Fester Faustschluss belastet das Daumensattelgelenk am stärksten (biomechanische Übersichten, `planung/grundlagen/I.md`).
 
-**Belastungsmerkmale je Übung** (Daten-Datei; Tabelle für alle Vorlagen in `grundlagen/I.md`, Winkel geschätzt **(ungeprüft)**, im Studio prüfen):
+**Belastungsmerkmale je Übung** (Daten-Datei; Tabelle für alle Vorlagen in `planung/grundlagen/I.md`, Winkel geschätzt **(ungeprüft)**, im Studio prüfen):
 `griff` (keiner · leicht · druck · zug_mittel · zug_stark · stuetz_flach · ball) · `hueftbeugung` (gering · mittel · tief) + `begrenzbar` (ja/nein) · `hueftrotation` (nein · innen · aussen · beide) · `adduktion` (nein · bis_mitte · ueber_mitte) · `stoss` (kein · gering · hoch). Eigene Übungen: „unbekannt“ → Hinweis, wenn Einschränkungen aktiv sind.
 
 **Welcher Eintrag welche Regel auslöst**
@@ -215,7 +215,7 @@ Zählt zur Tages-Eiweißmenge. Morton et al. 2018, Br J Sports Med 52:376, doi 1
 | Fatburner / Grüntee-Extrakt | b, c | Kein Muskelaufbau; ab 800 mg EGCG/Tag Hinweise auf Leberschäden (EFSA 2018), EU-Beschränkung seit Dezember 2022 (VO (EU) 2022/2340). |
 | Glutamin, L-Carnitin, Kollagen, Multivitamin, CLA | b | Kein belegter Nutzen für Kraft/Muskelaufbau bei Gesunden **(Quellen ungeprüft)**. |
 
-Vollständige Quellen mit Links: [`grundlagen/H.md`](grundlagen/H.md), Prüfung: [`grundlagen/F.md`](grundlagen/F.md).
+Vollständige Quellen mit Links: [`planung/grundlagen/H.md`](planung/grundlagen/H.md), Prüfung: [`planung/grundlagen/F.md`](planung/grundlagen/F.md).
 
 ---
 

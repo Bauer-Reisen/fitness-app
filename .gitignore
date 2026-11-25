@@ -1,4 +1,6 @@
-.privat-woerter.txt
 node_modules/
+.privat-woerter.txt
 .DS_Store
-*.backup.json
+Thumbs.db
+*.log
+fitness-backup-*.json

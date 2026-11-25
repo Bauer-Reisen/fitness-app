@@ -1,0 +1,3 @@
+#!/bin/sh
+# Vor jedem Hochladen: nichts Privates, Versionen/Hilfe/Offline-Liste stimmen, Logik-Tests grün.
+npm run check --silent || exit 1

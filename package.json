@@ -1,0 +1,19 @@
+{
+  "name": "fitness-app",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Persönliche Fitness-App: Training mit Feedback, Ernährung, Körperdaten – nur auf dem eigenen Handy",
+  "type": "module",
+  "scripts": {
+    "start": "node scripts/dev.js",
+    "check": "node scripts/check-privat.js && node scripts/check-app.js && node scripts/check-logik.js",
+    "icons": "node scripts/make-icons.js",
+    "qr": "node scripts/make-qr.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "qrcode": "^1.5.4"
+  }
+}

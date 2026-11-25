@@ -1,0 +1,6 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    { "name": "fitness-app", "runtimeExecutable": "node", "runtimeArgs": ["scripts/dev.js"], "port": 5820 }
+  ]
+}
