@@ -1,9 +1,9 @@
 // Profil: Werte für Bedarf und Startprofil (Erfahrung je Muster).
-import { alle, speichere, neueId } from './db.js?v=0.1.6';
-import { ALLTAG, ZIELE } from './bedarf.js?v=0.1.6';
-import { MUSTER } from './katalog.js?v=0.1.6';
-import { esc, toast } from './ui.js?v=0.1.6';
-import { heuteIso } from './datum.js?v=0.1.6';
+import { alle, speichere, neueId } from './db.js?v=0.1.7';
+import { ALLTAG, ZIELE } from './bedarf.js?v=0.1.7';
+import { MUSTER } from './katalog.js?v=0.1.7';
+import { esc, toast } from './ui.js?v=0.1.7';
+import { heuteIso } from './datum.js?v=0.1.7';
 
 const ERFAHRUNG = { neu: 'neu', frueher: 'früher regelmäßig', aktuell: 'aktuell regelmäßig' };
 const AUSDAUER = { 5: 'unter 10 Min.', 20: '10–30 Min.', 45: '30–60 Min.', 90: 'über 60 Min.' };

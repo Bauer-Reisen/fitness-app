@@ -31,6 +31,8 @@ Für eine neue Sitzung: zuerst diese Datei lesen, dann bei Bedarf [ANFORDERUNGEN
 
 - **0.1.6** (25.11.2026): 15 und 21 = Klimmzug-/Dip-Maschine mit Unterstützung (Foto 15: Kniepolster + Stapel; 21 baugleich angenommen). Neue Vorlage `gravitron` (`umgekehrt`: Stufenliste absteigend, Anzeige „Hilfe … kg“), Übungen Klimmzug/Dips mit Unterstützung. 24 Crossover = Maschine (Foto).
 
+- **0.1.7** (25.11.2026): Geräteseite zeigt Stufenfelder bei Unterstützung aufsteigend (vorher Kleinste/Größte vertauscht).
+
 ## Als Nächstes
 - `main` + Pages einschalten, dann am iPhone testen (Home-Bildschirm, Wake Lock ab iOS 18.4, Offline im Studio).
 - Prüfpunkte vor/bei Abnahme: ANFORDERUNGEN.md Abschnitt 4 (u. a. Gerätemerkmale im Studio prüfen, Vorgaben zur Hüftprothese erfragen).
