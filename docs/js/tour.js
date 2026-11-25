@@ -1,7 +1,7 @@
 // Rundgang beim allerersten Öffnen (wie in der Film-App): Punkte oben antippbar,
 // ab Karte 2 „← Zurück" plus kleiner Link „Rundgang überspringen". Unter „Mehr" wieder aufrufbar.
-import { dialog, esc } from './ui.js?v=0.1.4';
-import { STEPS } from './hilfe.js?v=0.1.4';
+import { dialog, esc } from './ui.js?v=0.1.5';
+import { STEPS } from './hilfe.js?v=0.1.5';
 
 export async function runTour(name = '') {
   const steps = STEPS;

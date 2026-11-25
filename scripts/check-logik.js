@@ -274,6 +274,15 @@ const vg = (stand, ctx = ctxBasis()) => vorgabeBerechnen(stand, bp, gbp, 'haupt'
   pruefe('zweites Training kein Test mehr', !v2.test && v2.ziel === 20);
 }
 
+{
+  // Stufen-Anzeige (Rasten): kein „großer Sprung“, obwohl 1 → 2 rechnerisch +100 % ist
+  const gs = { ...gbp, anzeige: 'stufe', stufen: [1, 2, 3, 4, 5, 6] };
+  const st = { ...standMit({ stufenIndex: 1, ziel: 12 }), erfuelltInFolge: 1 };
+  const v = vorgabeBerechnen(st, bp, gs, 'haupt', ctxBasis());
+  const r = auswerten(st, v, [satz(1, 12, 'passend'), satz(1, 12, 'passend'), satz(1, 12, 'passend')], gs, ctxBasis());
+  pruefe('Raste: 2× erfüllt → nächste Raste, Ziel 8', r.stand.stufenIndex === 2 && r.stand.ziel === 8, r.text);
+}
+
 // ---------- Körper ----------
 {
   const m = [['2026-11-25', 80], ['2026-11-26', 81], ['2026-11-28', 80.5], ['2026-11-30', 79.5], ['2026-12-01', 80]].map(([datum, wert]) => ({ art: 'gewicht', datum, wert }));

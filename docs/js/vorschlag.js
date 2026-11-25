@@ -1,9 +1,9 @@
 // Trainingsvorschlag und Steigerung (docs/ANFORDERUNGEN.md, Abschnitt 1a und 1c). Ohne Bildschirm-Code.
-import { R } from './regeln.js?v=0.1.4';
-import { HAUPTMUSTER, MUSTER } from './katalog.js?v=0.1.4';
-import { bewerte, hueftEintraege, handEintraege } from './gelenke.js?v=0.1.4';
-import { kombiniert, sprung, anzeige } from './stufen.js?v=0.1.4';
-import { plusTage, tageZwischen, stundenZwischen } from './datum.js?v=0.1.4';
+import { R } from './regeln.js?v=0.1.5';
+import { HAUPTMUSTER, MUSTER } from './katalog.js?v=0.1.5';
+import { bewerte, hueftEintraege, handEintraege } from './gelenke.js?v=0.1.5';
+import { kombiniert, sprung, anzeige } from './stufen.js?v=0.1.5';
+import { plusTage, tageZwischen, stundenZwischen } from './datum.js?v=0.1.5';
 
 export const paarId = (geraetId, uebungId) => `${geraetId}:${uebungId}`;
 
@@ -337,7 +337,7 @@ export function auswerten(stand, vorgabe, saetze, geraet, ctx, rolle = 'haupt') 
   if (!sperre && (neu.erfuelltInFolge >= 2 || neu.easyInFolge >= 2)) {
     if (base >= n - 1) return { stand: neu, text: 'oberste Stufe erreicht – mehr Wdh. oder einarmig/einbeinig', richtung };
     const sp = sprung(geraet, base);
-    const grosserSprung = typ === 'kg' && rolle === 'haupt' && sp > R.grosserSprung;
+    const grosserSprung = typ === 'kg' && rolle === 'haupt' && geraet.anzeige !== 'stufe' && sp > R.grosserSprung; // Rasten/Platten-Nummern sind keine kg
     if (grosserSprung && (stand.obergrenze ?? R.kg.max) < R.kg.maxGrosserSprung) {
       neu.obergrenze = R.kg.maxGrosserSprung;
       neu.ziel = Math.min(R.kg.maxGrosserSprung, neu.ziel + 1);

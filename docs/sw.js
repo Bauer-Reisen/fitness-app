@@ -4,7 +4,7 @@
 // - Updates: app.js merkt eine neue Version (version.json) und lädt mit ?v=<neu> – das geht übers Netz.
 // - Deine Daten (IndexedDB) werden hier nicht angefasst.
 
-const VERSION = '0.1.4';
+const VERSION = '0.1.5';
 const CACHE = 'fitness-' + VERSION;
 const DATEIEN = [
   './', 'index.html', 'manifest.webmanifest', 'style.css', 'version.json',

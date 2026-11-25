@@ -60,7 +60,8 @@ const OHNE = [
 
 export const STUDIO = [
   ...HAUPT.map(([nr, name, typ, uebungen]) => ({ id: `st-${nr}`, nr, bereich: 'haupt', name, typ, uebungen })),
-  ...ROT.map(([nr, name, typ, uebungen]) => ({ id: `st-rot-${nr}`, nr, bereich: 'rot', name, typ, uebungen })),
+  // Gerätepark rot: Hebel mit verschiebbarem Gewicht auf einer Raststange (Vermutung nach Fotos) → Stufe = Raste
+  ...ROT.map(([nr, name, typ, uebungen]) => ({ id: `st-rot-${nr}`, nr, bereich: 'rot', name, typ, uebungen, anzeige: 'stufe', stufen: { start: 1, schritt: 1, max: 12 } })),
   ...OHNE.map(([typ, name, uebungen]) => ({ id: `st-${typ}`, nr: null, bereich: 'ohne', name, typ, uebungen })),
 ];
 

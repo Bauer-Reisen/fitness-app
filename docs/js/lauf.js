@@ -1,14 +1,14 @@
 // Laufendes Training: Aufwärmen → Mobilität → Übungen (Satz mit 1 Tipp, Pause) → Handprogramm → Abschluss.
 // Jeder Satz wird sofort gespeichert. Nach Unterbrechung: „Fortsetzen“. Nach 4 h automatisch beendet.
-import { alle, hole, speichere, kv, neueId, loesche } from './db.js?v=0.1.4';
-import { ladeKontext } from './kontext.js?v=0.1.4';
-import { planErstellen, folgesatz, auswerten, neuerStand, typVon, alternativen, mobilNeu, paarId, vorgabeBerechnen } from './vorschlag.js?v=0.1.4';
-import { anzeige, kombiniert } from './stufen.js?v=0.1.4';
-import { MOBILITAET, HANDPROGRAMM, MUSTER } from './katalog.js?v=0.1.4';
-import { R } from './regeln.js?v=0.1.4';
-import { esc, toast, dialog, undoBar } from './ui.js?v=0.1.4';
-import { heuteIso, monatIso, monateZwischen } from './datum.js?v=0.1.4';
-import { bewerte, mitUeberkreuzVorgabe, opHinweis, aktiv } from './gelenke.js?v=0.1.4';
+import { alle, hole, speichere, kv, neueId, loesche } from './db.js?v=0.1.5';
+import { ladeKontext } from './kontext.js?v=0.1.5';
+import { planErstellen, folgesatz, auswerten, neuerStand, typVon, alternativen, mobilNeu, paarId, vorgabeBerechnen } from './vorschlag.js?v=0.1.5';
+import { anzeige, kombiniert } from './stufen.js?v=0.1.5';
+import { MOBILITAET, HANDPROGRAMM, MUSTER } from './katalog.js?v=0.1.5';
+import { R } from './regeln.js?v=0.1.5';
+import { esc, toast, dialog, undoBar } from './ui.js?v=0.1.5';
+import { heuteIso, monatIso, monateZwischen } from './datum.js?v=0.1.5';
+import { bewerte, mitUeberkreuzVorgabe, opHinweis, aktiv } from './gelenke.js?v=0.1.5';
 
 const FEEDBACK = [
   ['easy', 'easy', 'noch 4+ Wdh. drin'],
@@ -273,7 +273,7 @@ async function uebung(view, t, s, ctx, weiter) {
       <h1 class="title title-sm">${esc(u.name)}</h1>
       <p class="geraet">${g.name !== u.name ? esc(g.name) : ''}${s.rolle === 'foerder' ? ' · <span class="tag">Förderung</span>' : ''}</p>
       ${einstellungen ? `<p class="einst">${einstellungen} <a class="link klein" href="#/geraet/${encodeURIComponent(g.id)}">ändern</a></p>` : ''}
-      ${g.studio && (typ === 'kg') && !g.stufenGeprueft ? `<p class="hinweis">Gewichtsstufen dieses Geräts sind noch nicht geprüft (Vorgabe: 5er-Schritte). <a href="#/geraet/${encodeURIComponent(g.id)}">Am Gerät ablesen und eintragen</a></p>` : ''}
+      ${g.studio && (typ === 'kg') && !g.stufenGeprueft ? `<p class="hinweis">Gewichtsstufen dieses Geräts sind noch nicht geprüft (Vorgabe: ${g.anzeige === 'stufe' ? 'Stufen 1–12' : '5er-Schritte'}). <a href="#/geraet/${encodeURIComponent(g.id)}">Am Gerät ablesen und eintragen</a></p>` : ''}
       ${[...bew.hinweise, ...(s.hinweise || [])].filter((x, i, a) => a.indexOf(x) === i).map((h) => `<p class="hinweis">${esc(h)}</p>`).join('')}
       ${u.hinweis ? `<p class="hint">${esc(u.hinweis)}</p>` : ''}
       ${v.gruende?.length && nr === 1 ? `<p class="hint">${v.gruende.map(esc).join(' · ')}</p>` : ''}

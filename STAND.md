@@ -27,6 +27,8 @@ Für eine neue Sitzung: zuerst diese Datei lesen, dann bei Bedarf [ANFORDERUNGEN
 
 - **0.1.4** (25.11.2026): Studio-Liste (docs/js/studio.js): Hauptbereich 1–33 und Gerätepark rot 1–7 laut Geräteliste des Studios, dazu Ausdauergeräte, Matten, Medizinbälle, Wand-Klimmzugstange; je Gerät Vorlage und Übungen. Standard an (kv `studio`), allgemeine Vorlagen zusätzlich aufklappbar. Gewichtsstufen ungeprüft → Hinweis im Training und auf der Geräteseite, bis gespeichert (`stufenGeprueft`). Neue Übungen Crossover (Brust), Dips an der Maschine. Offene Fragen an den Nutzer: Gerätepark rot (Art des Widerstands), 15/21 Klimmzug/Dips (mit Unterstützung?), 24 Crossover (Maschine oder Seilzug?).
 
+- **0.1.5** (25.11.2026): Gerätepark rot als Stufen (Rasten 1–12, Vermutung nach Fotos: Hebel mit verschiebbarem Gewicht); bei Stufen-Anzeige gilt die Regel „großer Sprung“ nicht.
+
 ## Als Nächstes
 - `main` + Pages einschalten, dann am iPhone testen (Home-Bildschirm, Wake Lock ab iOS 18.4, Offline im Studio).
 - Prüfpunkte vor/bei Abnahme: ANFORDERUNGEN.md Abschnitt 4 (u. a. Gerätemerkmale im Studio prüfen, Vorgaben zur Hüftprothese erfragen).
