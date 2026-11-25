@@ -172,6 +172,11 @@ input:focus, select:focus { outline: 3px solid var(--accent); outline-offset: 1p
 .zahlzeile .gross { font-size: 2.2rem; }
 .rund { width: 60px; height: 60px; border-radius: 50%; border: 1.5px solid var(--line); background: var(--card); color: var(--ink); font: 800 1.4rem var(--f-text); cursor: pointer; flex: none; -webkit-tap-highlight-color: transparent; }
 .rund:active { background: var(--accent-soft); }
+.eingabe-wert { text-align: center; margin: 10px 0 4px; font-weight: 700; color: var(--ink-soft); }
+.knopfreihe { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 6px 0 10px; }
+.knopfreihe .rund { width: 100%; border-radius: 14px; font-size: 1.1rem; }
+.umfaenge .diff { font-size: .9rem; font-weight: 650; color: var(--muted); }
+.umfaenge .diff.gut { color: var(--ok); }
 .schmerzzeile { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 8px 0 0; }
 .schmerzwahl { display: flex; gap: 8px; }
 .schmerzwahl .btn.on { border-color: var(--warm); background: var(--warn-bg); color: var(--ink); }
@@ -248,3 +253,10 @@ input:focus, select:focus { outline: 3px solid var(--accent); outline-offset: 1p
   .wahl.vier { grid-template-columns: repeat(2, 1fr); }
   .rund { width: 52px; height: 52px; }
 }
+
+/* Nichts darf über den Rand ragen: lange Texte umbrechen statt schieben */
+.liste > li > * { min-width: 0; }
+.liste > li > span, .check.gross span { overflow-wrap: anywhere; }
+.liste > li > .btn, .liste > li > .knoepfe { flex: none; }
+.seg .btn, .wahl .btn { min-width: 0; white-space: normal; line-height: 1.2; }
+.btn { max-width: 100%; }

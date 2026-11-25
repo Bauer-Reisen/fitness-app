@@ -5,8 +5,8 @@ Für eine neue Sitzung: zuerst diese Datei lesen, dann bei Bedarf [ANFORDERUNGEN
 **Regeln:** Deutsch, knapp, ohne Fachjargon. Keine Konten anlegen, keine Passwörter eingeben. **Keine persönlichen Gesundheitsangaben ins Repository** – Testdaten nur erfunden und allgemein. Aufbau wie Sziget-/Sportplatz-App (`docs/`, `scripts/`, Rundgang + „Was ist neu?“ in `docs/js/hilfe.js`, Versionen mit `scripts/set-version.js`). Bei jeder sichtbaren Neuerung: Rundgang-Karte prüfen (`stand`) und „Was ist neu?“-Eintrag ergänzen.
 
 ## Eingerichtet
-- Repository `Bauer-Reisen/fitness-app` (öffentlich). Entwicklung auf Branch `claude/fitness-app-requirements-bwg1n9`.
-- **Offen:** Branch `main` anlegen und GitHub Pages einschalten (Branch `main`, Ordner `/docs`).
+- Repository `Bauer-Reisen/fitness-app` (öffentlich). Entwicklung auf Branch `claude/fitness-app-requirements-bwg1n9`, veröffentlicht über `main` (Pages: main /docs, eingeschaltet 25.11.2026).
+- Default-Branch im Repository noch auf `main` umstellen (nur über GitHub-Einstellungen möglich).
 - Speicher: IndexedDB `fitness-app`, localStorage-Präfix `fitness.`, Offline-Speicher `fitness-<Version>` (alle Apps auf bauer-reisen.github.io teilen sich den Browser-Speicher).
 - Prüfungen: `npm run check` = check-privat (nichts Privates, keine Backup-Dateien), check-app (Versionen, Importe, sw.js-Liste, Hilfe, Supplemente), check-logik (251 Regeltests).
 
@@ -18,6 +18,8 @@ Für eine neue Sitzung: zuerst diese Datei lesen, dann bei Bedarf [ANFORDERUNGEN
 - Körper: Gewicht mit 7-Tage-Mittel und Wochenkurve, Umfänge, Ziel-Check Rekomposition (Gewicht/Taille), Unverträglichkeiten, Profil (inkl. Erfahrung je Muster), Gesundheitsabfrage.
 - Mehr: Backup (Teilen-Menü, Import ersetzt), Supplement-Prüfliste, „Wie wird gerechnet?“, Einstellungen, Weitergeben (QR), Offline neu speichern, Daten löschen.
 - Geprüft im Browser bei 375 px: Einrichten, Gesundheitsabfrage, Geräte, zwei Trainings (Startgewicht, Steigerung im Training), Muskelkater-Karte, Backup-Download; keine Fehler in der Konsole, kein Querscrollen.
+
+- **0.1.1** (25.11.2026): Körper → Umfänge mit Taille, Brust, Oberarm, Oberschenkel (je Anleitung, Datum zum Nachtragen, Veränderung seit erster Messung), Ziel-Check mit allen Umfängen. Gewichts-Knöpfe in eigener Reihe (ragten bei 375 px über den Rand), lange Texte brechen um (Geräte, Profil). Bei 320 und 375 px alle Seiten ohne Überstand geprüft.
 
 ## Als Nächstes
 - `main` + Pages einschalten, dann am iPhone testen (Home-Bildschirm, Wake Lock ab iOS 18.4, Offline im Studio).

@@ -1,10 +1,10 @@
 // Meine Geräte: Vorlagen abhaken, Gewichtsstufen und Einstellungen, eigene Geräte, Übungen aus-/einblenden.
-import { alle, hole, speichere, loesche, neueId } from './db.js?v=0.1.0';
-import { ladeGeraete, ladeUebungen } from './kontext.js?v=0.1.0';
-import { MUSTER, BELASTUNGSART, GERAETE } from './katalog.js?v=0.1.0';
-import { stufenAusVorschlag, kombiniert, anzeige } from './stufen.js?v=0.1.0';
-import { paarId } from './vorschlag.js?v=0.1.0';
-import { esc, dialog, toast } from './ui.js?v=0.1.0';
+import { alle, hole, speichere, loesche, neueId } from './db.js?v=0.1.1';
+import { ladeGeraete, ladeUebungen } from './kontext.js?v=0.1.1';
+import { MUSTER, BELASTUNGSART, GERAETE } from './katalog.js?v=0.1.1';
+import { stufenAusVorschlag, kombiniert, anzeige } from './stufen.js?v=0.1.1';
+import { paarId } from './vorschlag.js?v=0.1.1';
+import { esc, dialog, toast } from './ui.js?v=0.1.1';
 
 const REIHE = ['druecken', 'ziehen', 'beine', 'rumpf', 'ausdauer'];
 

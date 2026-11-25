@@ -1,6 +1,6 @@
 // „Was ist neu?" – nach einem Update einmal, nur für alle, die den Rundgang schon kennen.
-import { dialog } from './ui.js?v=0.1.0';
-import { NEWS } from './hilfe.js?v=0.1.0';
+import { dialog } from './ui.js?v=0.1.1';
+import { NEWS } from './hilfe.js?v=0.1.1';
 
 export { NEWS };
 

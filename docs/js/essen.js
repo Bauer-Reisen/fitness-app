@@ -1,9 +1,9 @@
 // Essen: Tagesziel, Shake mit 1 Tipp, Schnelleingabe, Zuletzt/Favoriten, Grundliste, Mahlzeitvorschläge.
-import { alle, kv, speichere, loesche, neueId } from './db.js?v=0.1.0';
-import { bedarfFuer } from './kontext.js?v=0.1.0';
-import { LEBENSMITTEL, MAHLZEITEN, portionWerte, vorschlaege, QUELLE_HINWEIS } from './lebensmittel.js?v=0.1.0';
-import { esc, toast, dialog, undoBar, zahl } from './ui.js?v=0.1.0';
-import { heuteIso } from './datum.js?v=0.1.0';
+import { alle, kv, speichere, loesche, neueId } from './db.js?v=0.1.1';
+import { bedarfFuer } from './kontext.js?v=0.1.1';
+import { LEBENSMITTEL, MAHLZEITEN, portionWerte, vorschlaege, QUELLE_HINWEIS } from './lebensmittel.js?v=0.1.1';
+import { esc, toast, dialog, undoBar, zahl } from './ui.js?v=0.1.1';
+import { heuteIso } from './datum.js?v=0.1.1';
 
 export function tagesSumme(essen, datum) {
   const liste = essen.filter((e) => e.datum === datum);

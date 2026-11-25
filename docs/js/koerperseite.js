@@ -1,9 +1,9 @@
 // Reiter Körper: Gewicht (7-Tage-Mittel), Umfänge, Unverträglichkeiten, Links zu Profil und Gesundheit.
-import { alle, speichere, loesche, neueId } from './db.js?v=0.1.0';
-import { mittel7, letzteMessung, MESSARTEN, MIN_WIEGUNGEN } from './koerper.js?v=0.1.0';
-import { aktiv, STELLEN, ARTEN } from './gelenke.js?v=0.1.0';
-import { esc, toast, dialog, zahl, datum } from './ui.js?v=0.1.0';
-import { heuteIso, alterAm, plusTage } from './datum.js?v=0.1.0';
+import { alle, speichere, loesche, neueId } from './db.js?v=0.1.1';
+import { mittel7, letzteMessung, MESSARTEN, MIN_WIEGUNGEN, UMFAENGE, verlauf } from './koerper.js?v=0.1.1';
+import { aktiv, STELLEN, ARTEN } from './gelenke.js?v=0.1.1';
+import { esc, toast, dialog, zahl, datum } from './ui.js?v=0.1.1';
+import { heuteIso, alterAm, plusTage } from './datum.js?v=0.1.1';
 
 export async function render(view) {
   const heute = heuteIso();
@@ -12,7 +12,6 @@ export async function render(view) {
   const m7 = mittel7(messungen, heute);
   const letztes = letzteMessung(messungen, 'gewicht');
   const gewichte = messungen.filter((m) => m.art === 'gewicht').sort((a, b) => (a.datum < b.datum ? -1 : 1));
-  const taille = letzteMessung(messungen, 'taille');
   const unv = notizen.filter((n) => n.typ === 'unvertraeglichkeit');
   let wert = letztes?.wert ?? 80;
 
@@ -32,11 +31,11 @@ export async function render(view) {
         <p class="gross-zahl">${m7.wert != null ? `${zahl(m7.wert, 1)} kg` : '–'}</p>
         <p class="hint">${m7.genug ? `aus ${m7.anzahl} Wiegungen` : `Erst ${m7.anzahl} von ${MIN_WIEGUNGEN} Wiegungen in 7 Tagen – das Mittel ist noch unsicher.`}</p>
         ${punkte.length > 1 ? kurve(punkte) : ''}
-        <div class="zahlzeile">
+        <p class="eingabe-wert"><span class="gross" id="gw">${zahl(wert, 1)}</span> kg</p>
+        <div class="knopfreihe">
           <button type="button" class="rund" data-d="-1" aria-label="1 kg weniger">−1</button>
-          <button type="button" class="rund" data-d="-0.1" aria-label="0,1 kg weniger">−</button>
-          <span class="gross" id="gw">${zahl(wert, 1)}</span>
-          <button type="button" class="rund" data-d="0.1" aria-label="0,1 kg mehr">+</button>
+          <button type="button" class="rund" data-d="-0.1" aria-label="0,1 kg weniger">−0,1</button>
+          <button type="button" class="rund" data-d="0.1" aria-label="0,1 kg mehr">+0,1</button>
           <button type="button" class="rund" data-d="1" aria-label="1 kg mehr">+1</button>
         </div>
         <button type="button" class="btn btn-primary btn-wide" data-act="wiegen">Gewicht von heute speichern</button>
@@ -45,11 +44,16 @@ export async function render(view) {
 
       ${p?.ziel === 'rekomposition' ? zielCheck(messungen, heute) : ''}
       <div class="card">
-        <h3>Taille</h3>
-        <p>${taille ? `${zahl(taille.wert, 1)} cm am ${datum(taille.datum)}` : 'Noch nicht gemessen.'}</p>
-        <details><summary class="hint">So misst du richtig (WHO)</summary><p class="hint">Im Stehen, auf nackter Haut, Arme hängen lassen. Maßband waagerecht in der Mitte zwischen unterster Rippe und Oberkante des Beckenknochens, am Ende einer normalen Ausatmung. Alle 2–4 Wochen, morgens.</p></details>
-        <button type="button" class="btn" data-act="umfang">Umfang eintragen</button>
-        ${messungen.filter((x) => x.art !== 'gewicht').length ? `<ul class="liste kompakt">${messungen.filter((x) => x.art !== 'gewicht').sort((a, b) => (a.datum < b.datum ? 1 : -1)).slice(0, 8).map((x) => `<li><span>${esc(MESSARTEN[x.art]?.name || x.art)}: ${zahl(x.wert, 1)} cm · ${datum(x.datum)}</span><button type="button" class="link" data-weg="${x.id}" aria-label="Löschen">✕</button></li>`).join('')}</ul>` : ''}
+        <h3>Umfänge</h3>
+        <p class="hint">Alle 2–4 Wochen, morgens, immer an derselben Stelle. Die Taille zeigt, ob Bauchfett weniger wird; Brust, Oberarm und Oberschenkel zeigen Muskelaufbau. In die Bedarfsrechnung fließen sie nicht ein.</p>
+        <ul class="liste umfaenge">${UMFAENGE.map((art) => {
+          const v = verlauf(messungen, art);
+          const diff = v.anzahl > 1 ? v.letzter.wert - v.erster.wert : null;
+          const gut = diff == null || diff === 0 ? '' : (diff < 0) === (MESSARTEN[art].ziel === 'kleiner') ? 'gut' : '';
+          return `<li><span><strong>${esc(MESSARTEN[art].name)}</strong><br><span class="hint">${v.letzter ? `${zahl(v.letzter.wert, 1)} cm am ${datum(v.letzter.datum)}` : 'noch nicht gemessen'}</span>${diff != null ? `<br><span class="diff ${gut}">${diff >= 0 ? '+' : ''}${zahl(diff, 1)} cm seit ${datum(v.erster.datum)}</span>` : ''}</span>
+            <button type="button" class="btn klein" data-umfang="${art}">Messen</button></li>`;
+        }).join('')}</ul>
+        ${messungen.some((x) => x.art !== 'gewicht') ? `<details><summary class="hint">Alle Messungen</summary><ul class="liste kompakt">${messungen.filter((x) => x.art !== 'gewicht').sort((a, b) => (a.datum < b.datum ? 1 : -1)).map((x) => `<li><span>${esc(MESSARTEN[x.art]?.name || x.art)}: ${zahl(x.wert, 1)} cm · ${datum(x.datum)}</span><button type="button" class="link" data-weg="${x.id}" aria-label="Löschen">✕</button></li>`).join('')}</ul></details>` : ''}
       </div>
 
       <div class="card">
@@ -86,19 +90,25 @@ export async function render(view) {
     toast('Gespeichert.');
     neu();
   });
-  view.querySelector('[data-act=umfang]').addEventListener('click', async () => {
+  view.querySelectorAll('[data-umfang]').forEach((b) => b.addEventListener('click', async () => {
+    const art = b.dataset.umfang;
+    const m = MESSARTEN[art];
+    const alt = letzteMessung(messungen, art);
     const r = await dialog({
-      title: 'Umfang',
-      body: `<div class="form"><label for="ua">Was?</label><select id="ua" name="art">${Object.entries(MESSARTEN).filter(([k]) => k !== 'gewicht').map(([k, v]) => `<option value="${k}">${esc(v.name)}</option>`).join('')}</select>
-        <label for="uw">cm</label><input id="uw" name="wert" type="number" inputmode="decimal" step="0.5"></div>
-        <p class="hint">Brust, Oberarm und Oberschenkel sind nur für dich – sie fließen in keine Berechnung ein. Immer dieselbe Stelle und Seite messen.</p>`,
+      title: m.name,
+      body: `<p class="hint">${esc(m.anleitung)}</p><div class="form">
+        <label for="uw">cm</label><input id="uw" name="wert" type="number" inputmode="decimal" step="0.5" value="${alt ? alt.wert : ''}">
+        <label for="ud">Datum</label><input id="ud" name="datum" type="date" value="${heute}" max="${heute}"></div>
+        <p class="hint">Am besten zweimal messen und den Mittelwert nehmen.</p>`,
       buttons: [{ label: 'Abbrechen', value: 'x' }, { label: 'Speichern', value: 'ok', primary: true }],
       validate: (f) => (Number(String(f.wert).replace(',', '.')) > 0 ? '' : 'Bitte einen Wert eintragen.'),
     });
     if (r?.value !== 'ok') return;
-    await speichere('messungen', { id: neueId(), datum: heute, zeit: new Date().toISOString(), art: r.fields.art, wert: Number(String(r.fields.wert).replace(',', '.')), einheit: 'cm' });
+    const d = r.fields.datum && r.fields.datum <= heute ? r.fields.datum : heute;
+    await speichere('messungen', { id: neueId(), datum: d, zeit: new Date().toISOString(), art, wert: Number(String(r.fields.wert).replace(',', '.')), einheit: 'cm' });
+    toast('Gespeichert.');
     neu();
-  });
+  }));
   view.querySelectorAll('[data-weg]').forEach((b) => b.addEventListener('click', async () => { await loesche('messungen', b.dataset.weg); neu(); }));
   view.querySelector('[data-act=unv]').addEventListener('click', async () => {
     const r = await dialog({
@@ -122,15 +132,17 @@ export async function render(view) {
 function zielCheck(messungen, heute) {
   const jetzt = mittel7(messungen, heute).wert;
   const vorher = mittel7(messungen, plusTage(heute, -28)).wert;
-  const t = messungen.filter((m) => m.art === 'taille').sort((a, b) => (a.datum < b.datum ? -1 : 1));
-  const tNeu = t[t.length - 1];
-  const tAlt = [...t].reverse().find((m) => m.datum <= plusTage(heute, -21));
   const zeilen = [];
   if (jetzt != null && vorher != null) zeilen.push(`Gewicht in 4 Wochen: ${jetzt - vorher >= 0 ? '+' : ''}${zahl(jetzt - vorher, 1)} kg`);
-  if (tNeu && tAlt) zeilen.push(`Taille seit ${datum(tAlt.datum)}: ${tNeu.wert - tAlt.wert >= 0 ? '+' : ''}${zahl(tNeu.wert - tAlt.wert, 1)} cm`);
+  for (const art of UMFAENGE) {
+    const t = messungen.filter((m) => m.art === art).sort((a, b) => (a.datum < b.datum ? -1 : 1));
+    const neu = t[t.length - 1];
+    const alt = [...t].reverse().find((m) => m.datum <= plusTage(neu?.datum || heute, -21));
+    if (neu && alt) zeilen.push(`${MESSARTEN[art].name} seit ${datum(alt.datum)}: ${neu.wert - alt.wert >= 0 ? '+' : ''}${zahl(neu.wert - alt.wert, 1)} cm`);
+  }
   return `<div class="card card-soft"><h3>Ziel: Fett ab, Muskeln auf</h3>
-    <p>Läuft gut, wenn das Gewicht etwa gleich bleibt und die Taille langsam schmaler wird.</p>
-    ${zeilen.length ? `<ul class="liste kompakt">${zeilen.map((z) => `<li>${esc(z)}</li>`).join('')}</ul>` : '<p class="hint">Für den Vergleich braucht es Wiegungen über 4 Wochen und zwei Taillenmessungen mit 3 Wochen Abstand.</p>'}
+    <p>Läuft gut, wenn das Gewicht etwa gleich bleibt, die Taille langsam schmaler wird und Brust, Oberarm und Oberschenkel gleich bleiben oder zulegen.</p>
+    ${zeilen.length ? `<ul class="liste kompakt">${zeilen.map((z) => `<li>${esc(z)}</li>`).join('')}</ul>` : '<p class="hint">Für den Vergleich braucht es Wiegungen über 4 Wochen und Umfangsmessungen mit mindestens 3 Wochen Abstand.</p>'}
   </div>`;
 }
 

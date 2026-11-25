@@ -39,4 +39,9 @@ export const STEPS = [
 ];
 
 // Neueste zuerst. Nur sichtbare Neuerungen, keine Reparaturen.
-export const NEWS = [];
+export const NEWS = [
+  {
+    v: '0.1.1', karte: 'klein', title: 'Alle Umfänge',
+    items: ['Unter <strong>Körper → Umfänge</strong> misst du jetzt Taille, Brust, Oberarm und Oberschenkel – jeweils mit Anleitung, Datum zum Nachtragen und der Veränderung seit der ersten Messung.'],
+  },
+];
