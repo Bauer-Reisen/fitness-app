@@ -242,6 +242,26 @@ const vg = (stand, ctx = ctxBasis()) => vorgabeBerechnen(stand, bp, gbp, 'haupt'
   pruefe('Alternative ohne die Übung selbst', alt.length && alt[0].uebung.id !== 'brustpresse');
 }
 
+{
+  // Test-Satz bei Körpergewicht: Liegestütze, 20 geschafft, passend → Vorgabe 20
+  const ls = U('liegestuetz');
+  const st = neuerStand(ls, g.boden, 'haupt', ctxBasis());
+  const v = vorgabeBerechnen(st, ls, g.boden, 'haupt', ctxBasis());
+  pruefe('Erstes Mal = Test', v.test === true);
+  const f = folgesatz({ stufenIndex: 0, ziel: v.ziel }, { nr: 1, wert: 20, wdh: 20, feedback: 'passend' }, v, g.boden);
+  pruefe('Test 20 passend → Folgesätze 20', f.zustand.ziel === 20, f.text);
+  const f2 = folgesatz({ stufenIndex: 0, ziel: v.ziel }, { nr: 1, wert: 20, wdh: 20, feedback: 'easy' }, v, g.boden);
+  pruefe('Test 20 easy → 22', f2.zustand.ziel === 22);
+  const r = auswerten(st, v, [{ nr: 1, wdh: 20, feedback: 'passend' }, { nr: 2, wdh: 20, feedback: 'passend' }], g.boden, ctxBasis());
+  pruefe('Startwert aus Test gemerkt', r.stand.ziel === 20 && !r.stand.erstesTraining, r.text);
+  const pl = U('plank');
+  const vp = vorgabeBerechnen(neuerStand(pl, g.boden, 'haupt', ctxBasis()), pl, g.boden, 'haupt', ctxBasis());
+  const fp = folgesatz({ stufenIndex: 0, ziel: vp.ziel }, { nr: 1, wert: 45, sekunden: 45, feedback: 'passend' }, vp, g.boden);
+  pruefe('Plank-Test 45 s → 45 s', fp.zustand.ziel === 45, fp.text);
+  const v2 = vorgabeBerechnen(r.stand, ls, g.boden, 'haupt', ctxBasis());
+  pruefe('zweites Training kein Test mehr', !v2.test && v2.ziel === 20);
+}
+
 // ---------- Körper ----------
 {
   const m = [['2026-11-25', 80], ['2026-11-26', 81], ['2026-11-28', 80.5], ['2026-11-30', 79.5], ['2026-12-01', 80]].map(([datum, wert]) => ({ art: 'gewicht', datum, wert }));

@@ -1,14 +1,14 @@
 // Laufendes Training: Aufwärmen → Mobilität → Übungen (Satz mit 1 Tipp, Pause) → Handprogramm → Abschluss.
 // Jeder Satz wird sofort gespeichert. Nach Unterbrechung: „Fortsetzen“. Nach 4 h automatisch beendet.
-import { alle, hole, speichere, kv, neueId, loesche } from './db.js?v=0.1.1';
-import { ladeKontext } from './kontext.js?v=0.1.1';
-import { planErstellen, folgesatz, auswerten, neuerStand, typVon, alternativen, mobilNeu, paarId, vorgabeBerechnen } from './vorschlag.js?v=0.1.1';
-import { anzeige, kombiniert } from './stufen.js?v=0.1.1';
-import { MOBILITAET, HANDPROGRAMM, MUSTER } from './katalog.js?v=0.1.1';
-import { R } from './regeln.js?v=0.1.1';
-import { esc, toast, dialog, undoBar } from './ui.js?v=0.1.1';
-import { heuteIso, monatIso, monateZwischen } from './datum.js?v=0.1.1';
-import { bewerte, mitUeberkreuzVorgabe, opHinweis, aktiv } from './gelenke.js?v=0.1.1';
+import { alle, hole, speichere, kv, neueId, loesche } from './db.js?v=0.1.2';
+import { ladeKontext } from './kontext.js?v=0.1.2';
+import { planErstellen, folgesatz, auswerten, neuerStand, typVon, alternativen, mobilNeu, paarId, vorgabeBerechnen } from './vorschlag.js?v=0.1.2';
+import { anzeige, kombiniert } from './stufen.js?v=0.1.2';
+import { MOBILITAET, HANDPROGRAMM, MUSTER } from './katalog.js?v=0.1.2';
+import { R } from './regeln.js?v=0.1.2';
+import { esc, toast, dialog, undoBar } from './ui.js?v=0.1.2';
+import { heuteIso, monatIso, monateZwischen } from './datum.js?v=0.1.2';
+import { bewerte, mitUeberkreuzVorgabe, opHinweis, aktiv } from './gelenke.js?v=0.1.2';
 
 const FEEDBACK = [
   ['easy', 'easy', 'noch 4+ Wdh. drin'],
@@ -276,13 +276,16 @@ async function uebung(view, t, s, ctx, weiter) {
       ${[...bew.hinweise, ...(s.hinweise || [])].filter((x, i, a) => a.indexOf(x) === i).map((h) => `<p class="hinweis">${esc(h)}</p>`).join('')}
       ${u.hinweis ? `<p class="hint">${esc(u.hinweis)}</p>` : ''}
       ${v.gruende?.length && nr === 1 ? `<p class="hint">${v.gruende.map(esc).join(' · ')}</p>` : ''}
+      ${v.test && nr === 1 ? `<p class="card card-soft test">${typ === 'kg' || typ === 'ball'
+        ? '<strong>Erstes Mal an dieser Übung:</strong> Gewicht so wählen, dass etwa 10 saubere Wiederholungen gehen und noch 2–3 drin wären. Dann eintragen.'
+        : `<strong>Test-Satz:</strong> so viele saubere ${typ === 'zeit' ? 'Sekunden' : 'Wiederholungen'} wie gut gehen – 2–3 ${typ === 'zeit' ? 'Atemzüge' : 'Wiederholungen'} vor Schluss aufhören. Dann die Zahl eintragen.`}</p>` : ''}
       <p class="satz-nr">Satz ${nr} von ${v.saetze}</p>
-      <button type="button" class="vorgabe" data-act="aufklappen" aria-expanded="false">
+      <button type="button" class="vorgabe" data-act="aufklappen" aria-expanded="${v.test && nr === 1}">
         <span class="gross" id="wert">${wert} ${einheit}</span>
         <span class="mittel" id="gew">${esc(gewichtText())}</span>
         <span class="hint">antippen zum Ändern</span>
       </button>
-      <div class="aendern" hidden>
+      <div class="aendern" ${v.test && nr === 1 ? '' : 'hidden'}>
         <div class="zahlzeile"><button type="button" class="rund" data-w="-1" aria-label="weniger">−</button><span>${typ === 'zeit' ? 'Sekunden' : 'Wiederholungen'}</span><button type="button" class="rund" data-w="1" aria-label="mehr">+</button></div>
         ${typ === 'kg' || typ === 'ball' ? '<div class="zahlzeile"><button type="button" class="rund" data-s="-1" aria-label="leichter">−</button><span>Gewicht</span><button type="button" class="rund" data-s="1" aria-label="schwerer">+</button></div>' : ''}
       </div>

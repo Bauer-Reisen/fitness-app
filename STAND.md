@@ -21,6 +21,8 @@ Für eine neue Sitzung: zuerst diese Datei lesen, dann bei Bedarf [ANFORDERUNGEN
 
 - **0.1.1** (25.11.2026): Körper → Umfänge mit Taille, Brust, Oberarm, Oberschenkel (je Anleitung, Datum zum Nachtragen, Veränderung seit erster Messung), Ziel-Check mit allen Umfängen. Gewichts-Knöpfe in eigener Reihe (ragten bei 375 px über den Rand), lange Texte brechen um (Geräte, Profil). Bei 320 und 375 px alle Seiten ohne Überstand geprüft.
 
+- **0.1.2** (25.11.2026): Erster Satz einer neuen Übung mit Körpergewicht oder Haltezeit ist ein Test (so viele saubere Wdh. wie gut gehen, 2–3 Reserve); daraus werden Folgesätze und Startwert. Bei Geräten Hinweis zum Startgewicht. Vorschau im Reiter Training zeigt den Test.
+
 ## Als Nächstes
 - `main` + Pages einschalten, dann am iPhone testen (Home-Bildschirm, Wake Lock ab iOS 18.4, Offline im Studio).
 - Prüfpunkte vor/bei Abnahme: ANFORDERUNGEN.md Abschnitt 4 (u. a. Gerätemerkmale im Studio prüfen, Vorgaben zur Hüftprothese erfragen).

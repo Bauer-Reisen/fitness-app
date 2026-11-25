@@ -9,8 +9,8 @@ export const STEPS = [
     text: 'Die App schlägt dir jedes Training vor – passend zu deinen Geräten, deinem Fortschritt und deinem Körper. Alles bleibt <strong>nur auf diesem Handy</strong>, ohne Konto.',
   },
   {
-    id: 'feedback', stand: '0.1.0', icon: '👍', title: 'Ein Tipp pro Satz',
-    text: 'Nach jedem Satz tippst du, wie es war: <strong>easy</strong>, <strong>passend</strong>, <strong>gerade so</strong> oder <strong>nicht geschafft</strong>. Das trägt den Satz ein und startet die Pause. Die App zeigt dir sofort, was sie daraus macht – zum Beispiel „Nächstes Mal +1 Stufe“.',
+    id: 'feedback', stand: '0.1.2', icon: '👍', title: 'Ein Tipp pro Satz',
+    text: 'Nach jedem Satz tippst du, wie es war: <strong>easy</strong>, <strong>passend</strong>, <strong>gerade so</strong> oder <strong>nicht geschafft</strong>. Das trägt den Satz ein und startet die Pause. Bei einer neuen Übung ist der <strong>erste Satz ein Test</strong> – an Geräten wählst du dabei das Startgewicht. Die App zeigt dir sofort, was sie daraus macht.',
   },
   {
     id: 'schmerz', stand: '0.1.0', icon: '🩹', title: 'Schmerz? Sag es der App',
@@ -40,6 +40,10 @@ export const STEPS = [
 
 // Neueste zuerst. Nur sichtbare Neuerungen, keine Reparaturen.
 export const NEWS = [
+  {
+    v: '0.1.2', karte: 'feedback', title: 'Erster Satz = Test',
+    items: ['Bei einer neuen Übung mit Körpergewicht oder Haltezeit ist der <strong>erste Satz ein Test</strong>: so viele saubere Wiederholungen oder Sekunden wie gut gehen, 2–3 vor Schluss aufhören. Die App übernimmt das für die nächsten Sätze und Trainings.'],
+  },
   {
     v: '0.1.1', karte: 'klein', title: 'Alle Umfänge',
     items: ['Unter <strong>Körper → Umfänge</strong> misst du jetzt Taille, Brust, Oberarm und Oberschenkel – jeweils mit Anleitung, Datum zum Nachtragen und der Veränderung seit der ersten Messung.'],

@@ -1,5 +1,5 @@
 // Körperdaten: Mittelwerte und Verlauf. Ohne Bildschirm-Code.
-import { plusTage } from './datum.js?v=0.1.1';
+import { plusTage } from './datum.js?v=0.1.2';
 
 // anleitung: Taille nach WHO-STEPS; die übrigen Messpunkte sind übliche Praxis, keine Norm (ungeprüft).
 export const MESSARTEN = {

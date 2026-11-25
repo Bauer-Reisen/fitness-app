@@ -1,12 +1,12 @@
 // Reiter Training: heutiger Vorschlag, Start/Fortsetzen, Verlauf, ausgeblendete Übungen, Link zu den Geräten.
-import { speichere } from './db.js?v=0.1.1';
-import { ladeKontext } from './kontext.js?v=0.1.1';
-import { planErstellen } from './vorschlag.js?v=0.1.1';
-import { anzeige } from './stufen.js?v=0.1.1';
-import { esc } from './ui.js?v=0.1.1';
-import { datumKurz } from './datum.js?v=0.1.1';
-import { trainingStarten } from './lauf.js?v=0.1.1';
-import { bewerte } from './gelenke.js?v=0.1.1';
+import { speichere } from './db.js?v=0.1.2';
+import { ladeKontext } from './kontext.js?v=0.1.2';
+import { planErstellen } from './vorschlag.js?v=0.1.2';
+import { anzeige } from './stufen.js?v=0.1.2';
+import { esc } from './ui.js?v=0.1.2';
+import { datumKurz } from './datum.js?v=0.1.2';
+import { trainingStarten } from './lauf.js?v=0.1.2';
+import { bewerte } from './gelenke.js?v=0.1.2';
 
 export async function render(view) {
   const ctx = await ladeKontext();
@@ -17,6 +17,7 @@ export async function render(view) {
     const g = ctx.geraete[s.geraetId];
     const v = s.vorgabe;
     const last = v.typ === 'kg' || v.typ === 'ball' ? ` · ${s.neu ? 'Startgewicht wählen' : anzeige(g, v.stufenIndex)}` : '';
+    if (s.neu && v.typ !== 'kg' && v.typ !== 'ball') return `${v.saetze} Sätze · 1. Satz ist ein Test: so viele wie sauber gehen`;
     return `${v.saetze} × ${v.ziel}${v.typ === 'zeit' ? ' s' : ''}${last}`;
   };
   const beendet = ctx.trainings.filter((t) => t.status === 'beendet').reverse().slice(0, 10);

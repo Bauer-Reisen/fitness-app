@@ -1,11 +1,11 @@
 // Lädt alles Nötige aus dem Speicher und baut daraus den „Kontext“ für Vorschlag und Bedarf.
-import { alle, kv } from './db.js?v=0.1.1';
-import { GERAETE, UEBUNGEN } from './katalog.js?v=0.1.1';
-import { stufenAusVorschlag } from './stufen.js?v=0.1.1';
-import { heuteIso, alterAm } from './datum.js?v=0.1.1';
-import { rechenGewicht } from './koerper.js?v=0.1.1';
-import { tagesbedarf, STANDARD_MINUTEN } from './bedarf.js?v=0.1.1';
-import { aktiv } from './gelenke.js?v=0.1.1';
+import { alle, kv } from './db.js?v=0.1.2';
+import { GERAETE, UEBUNGEN } from './katalog.js?v=0.1.2';
+import { stufenAusVorschlag } from './stufen.js?v=0.1.2';
+import { heuteIso, alterAm } from './datum.js?v=0.1.2';
+import { rechenGewicht } from './koerper.js?v=0.1.2';
+import { tagesbedarf, STANDARD_MINUTEN } from './bedarf.js?v=0.1.2';
+import { aktiv } from './gelenke.js?v=0.1.2';
 
 export async function ladeGeraete() {
   const gespeichert = await alle('geraete');

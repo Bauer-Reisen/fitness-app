@@ -1,9 +1,9 @@
 // Trainingsvorschlag und Steigerung (docs/ANFORDERUNGEN.md, Abschnitt 1a und 1c). Ohne Bildschirm-Code.
-import { R } from './regeln.js?v=0.1.1';
-import { HAUPTMUSTER, MUSTER } from './katalog.js?v=0.1.1';
-import { bewerte, hueftEintraege, handEintraege, aktiv, STELLE_MUSTER } from './gelenke.js?v=0.1.1';
-import { kombiniert, sprung, anzeige } from './stufen.js?v=0.1.1';
-import { plusTage, tageZwischen, stundenZwischen } from './datum.js?v=0.1.1';
+import { R } from './regeln.js?v=0.1.2';
+import { HAUPTMUSTER, MUSTER } from './katalog.js?v=0.1.2';
+import { bewerte, hueftEintraege, handEintraege, aktiv, STELLE_MUSTER } from './gelenke.js?v=0.1.2';
+import { kombiniert, sprung, anzeige } from './stufen.js?v=0.1.2';
+import { plusTage, tageZwischen, stundenZwischen } from './datum.js?v=0.1.2';
 
 export const paarId = (geraetId, uebungId) => `${geraetId}:${uebungId}`;
 
@@ -144,11 +144,11 @@ export function vorgabeBerechnen(stand, uebung, geraet, rolle, ctx) {
     keineErhoehung = true;
     gruende.push('letztes Mal Schmerz gemeldet: Gewicht bleibt');
   }
-  if (stand.erstesTraining) gruende.push(hatStufen(typ) ? 'Erstes Mal: Startgewicht leicht wählen' : 'Erstes Mal: locker beginnen');
+  const test = !!stand.erstesTraining;
 
   saetze = Math.max(1, saetze);
   stufenIndex = Math.max(0, Math.min(stufenIndex, Math.max(0, n - 1)));
-  return { typ, bereich, stufenIndex, ziel, saetze, keineErhoehung, resetZaehler, gruende, standAenderung };
+  return { typ, bereich, stufenIndex, ziel, saetze, keineErhoehung, resetZaehler, gruende, standAenderung, test };
 }
 
 // Plan für heute
@@ -200,6 +200,13 @@ export function folgesatz(zustand, satz, vorgabe, geraet) {
   const f = satz.feedback;
   if (f === 'nichtBewertet') return { zustand: z, text: 'Satz nicht bewertet – Vorgabe bleibt.' };
 
+  // Erster Satz einer neuen Übung ohne Gewichtsstufen = Test: das Ergebnis wird die Vorgabe
+  if (vorgabe.test && satz.nr === 1 && !hatStufen(typ)) {
+    z.ziel = testZiel(satz.wert, f, typ, vorgabe.bereich);
+    const einheit = typ === 'zeit' ? ' s' : ' Wdh.';
+    return { zustand: z, text: `Test gemerkt: nächste Sätze ${z.ziel}${einheit}`.replace(/\.\.$/, '.') };
+  }
+
   if (hatStufen(typ)) {
     z.stufenIndex = satz.stufenIndex; // tatsächlich genutzte Stufe gilt weiter
     if (f === 'easy') {
@@ -235,6 +242,16 @@ export function folgesatz(zustand, satz, vorgabe, geraet) {
 
 const OK = ['passend', 'easy'];
 
+// Aus dem Test-Satz die Vorgabe ableiten (Reserve von 2–3 Wdh. ist im Test schon drin)
+export function testZiel(wert, feedback, typ, bereich) {
+  const schritt = typ === 'zeit' ? R.zeit.schritt : 2;
+  let z = wert ?? 0;
+  if (feedback === 'easy') z += schritt;
+  else if (feedback === 'geradeSo') z -= typ === 'zeit' ? 5 : 1;
+  else if (feedback === 'nichtGeschafft') z -= schritt;
+  return Math.max(bereich.min, Math.min(bereich.max, Math.round(z)));
+}
+
 // Auswertung nach dem Training → neuer Stand und Text für „Nächstes Mal“
 export function auswerten(stand, vorgabe, saetze, geraet, ctx, rolle = 'haupt') {
   const typ = vorgabe.typ;
@@ -262,6 +279,12 @@ export function auswerten(stand, vorgabe, saetze, geraet, ctx, rolle = 'haupt') 
     neu.erstesTraining = false;
     if (hatStufen(typ)) neu.stufenIndex = letzter.stufenIndex;
     neu.ziel = vorgabe.ziel;
+    if (!hatStufen(typ)) {
+      // Startwert aus dem Test-Satz (erster bewerteter Satz)
+      neu.ziel = testZiel(wert(bewertet[0]), bewertet[0].feedback, typ, bereichVon(typ, rolle, stand));
+      const einheit = typ === 'zeit' ? ' s' : ' Wdh.';
+      return { stand: neu, text: `Startwert gemerkt: ${neu.ziel}${einheit}`, richtung };
+    }
     const aufwand = bewertet.every(s => s.feedback === 'easy') && !sperre;
     if (aufwand && hatStufen(typ) && neu.stufenIndex < n - 1) { neu.stufenIndex++; text = `Startgewicht war leicht: nächstes Mal ${zeige(neu.stufenIndex)}`; richtung = 'hoch'; }
     else text = hatStufen(typ) ? `Startgewicht gemerkt: ${zeige(neu.stufenIndex)}` : 'Startwert gemerkt';
