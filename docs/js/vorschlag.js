@@ -1,9 +1,9 @@
 // Trainingsvorschlag und Steigerung (docs/ANFORDERUNGEN.md, Abschnitt 1a und 1c). Ohne Bildschirm-Code.
-import { R } from './regeln.js?v=0.1.8';
-import { HAUPTMUSTER, MUSTER } from './katalog.js?v=0.1.8';
-import { bewerte, hueftEintraege, handEintraege } from './gelenke.js?v=0.1.8';
-import { kombiniert, sprung, anzeige } from './stufen.js?v=0.1.8';
-import { plusTage, tageZwischen, stundenZwischen } from './datum.js?v=0.1.8';
+import { R } from './regeln.js?v=0.1.9';
+import { HAUPTMUSTER, MUSTER } from './katalog.js?v=0.1.9';
+import { bewerte, hueftEintraege, handEintraege } from './gelenke.js?v=0.1.9';
+import { kombiniert, sprung, anzeige } from './stufen.js?v=0.1.9';
+import { plusTage, tageZwischen, stundenZwischen } from './datum.js?v=0.1.9';
 
 export const paarId = (geraetId, uebungId) => `${geraetId}:${uebungId}`;
 

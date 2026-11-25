@@ -1,11 +1,11 @@
 // Meine Geräte: Vorlagen abhaken, Gewichtsstufen und Einstellungen, eigene Geräte, Übungen aus-/einblenden.
-import { alle, hole, speichere, loesche, neueId, kv } from './db.js?v=0.1.8';
-import { ladeGeraete, ladeUebungen, studioAn } from './kontext.js?v=0.1.8';
-import { BEREICHE, STUDIO_NAME } from './studio.js?v=0.1.8';
-import { MUSTER, BELASTUNGSART, GERAETE } from './katalog.js?v=0.1.8';
-import { stufenAusVorschlag, kombiniert, anzeige } from './stufen.js?v=0.1.8';
-import { paarId } from './vorschlag.js?v=0.1.8';
-import { esc, dialog, toast } from './ui.js?v=0.1.8';
+import { alle, hole, speichere, loesche, neueId, kv } from './db.js?v=0.1.9';
+import { ladeGeraete, ladeUebungen, studioAn, ladeKontext } from './kontext.js?v=0.1.9';
+import { BEREICHE, STUDIO_NAME } from './studio.js?v=0.1.9';
+import { MUSTER, BELASTUNGSART, GERAETE } from './katalog.js?v=0.1.9';
+import { stufenAusVorschlag, kombiniert, anzeige } from './stufen.js?v=0.1.9';
+import { paarId, neuerStand, typVon } from './vorschlag.js?v=0.1.9';
+import { esc, dialog, toast } from './ui.js?v=0.1.9';
 
 const REIHE = ['druecken', 'ziehen', 'beine', 'rumpf', 'ausdauer'];
 
@@ -136,10 +136,11 @@ export async function renderGeraet(view, id) {
 
       <div class="card">
         <h3>Übungen an diesem Gerät</h3>
+        <p class="hint">„Stand“: hier trägst du ein, was du schon geschafft hast (z. B. ohne App trainiert). Die App schlägt dann von da aus vor.</p>
         <ul class="liste">${uebungen.map((u) => {
           const st = staende[paarId(g.id, u.id)];
           const aus = st && st.ausgeblendet && st.ausgeblendet !== 'nein';
-          return `<li><span><strong>${esc(u.name)}</strong><br><span class="hint">${esc(MUSTER[u.muster] || '')}${aus ? ` · ${st.ausgeblendet === 'vorsorglich' ? 'vorsorglich ausgeblendet' : 'ausgeblendet'}` : ''}</span></span><button type="button" class="btn klein" data-aus="${esc(u.id)}">${aus ? 'Einblenden' : 'Ausblenden'}</button></li>`;
+          return `<li><span><strong>${esc(u.name)}</strong><br><span class="hint">${esc(MUSTER[u.muster] || '')}${aus ? ` · ${st.ausgeblendet === 'vorsorglich' ? 'vorsorglich ausgeblendet' : 'ausgeblendet'}` : ''}</span></span><span class="knoepfe"><button type="button" class="btn klein" data-stand="${esc(u.id)}">Stand</button><button type="button" class="btn klein btn-quiet" data-aus="${esc(u.id)}">${aus ? 'Einblenden' : 'Ausblenden'}</button></span></li>`;
         }).join('') || '<li class="hint">Keine Übung zugeordnet.</li>'}</ul>
         ${g.eigen ? '<button type="button" class="btn" data-act="uebung">+ Übung zuordnen</button>' : ''}
       </div>
@@ -147,6 +148,33 @@ export async function renderGeraet(view, id) {
     </section>`;
 
   const neu = () => renderGeraet(view, id);
+  view.querySelectorAll('[data-stand]').forEach((b) => b.addEventListener('click', async () => {
+    const u = uebungen.find((x) => x.id === b.dataset.stand);
+    const ctx = await ladeKontext();
+    const pid = paarId(g.id, u.id);
+    const alt = ctx.staende[pid] || neuerStand(u, g, u.muster === 'foerderung' ? 'foerder' : 'haupt', ctx);
+    const typ = typVon(u, g);
+    const liste = kombiniert(g);
+    const mitStufen = typ === 'kg' || typ === 'ball';
+    const r = await dialog({
+      title: u.name,
+      body: `<p class="hint">Was hast du zuletzt sauber geschafft (mit 2–3 Wiederholungen Reserve)?</p><div class="form">
+        ${mitStufen ? `<label for="sg">Gewicht</label><select id="sg" name="stufe">${liste.map((_, i) => `<option value="${i}" ${i === (alt.erstesTraining ? 0 : alt.stufenIndex) ? 'selected' : ''}>${esc(anzeige(g, i))}</option>`).join('')}</select>` : ''}
+        <label for="sw">${typ === 'zeit' ? 'Sekunden' : 'Wiederholungen'} pro Satz</label><input id="sw" name="wert" type="number" inputmode="numeric" value="${alt.ziel ?? ''}"></div>
+        ${mitStufen && !g.stufenGeprueft ? '<p class="hint">Stimmen die Gewichtsstufen oben auf dieser Seite? Sonst zuerst die Stufen eintragen.</p>' : ''}`,
+      buttons: [{ label: 'Abbrechen', value: 'x' }, { label: 'Speichern', value: 'ok', primary: true }],
+      validate: (f) => (Number(f.wert) > 0 ? '' : 'Bitte eine Zahl eintragen.'),
+    });
+    if (r?.value !== 'ok') return;
+    const heute = new Date(); const iso = `${heute.getFullYear()}-${String(heute.getMonth() + 1).padStart(2, '0')}-${String(heute.getDate()).padStart(2, '0')}`;
+    await speichere('geraetUebung', {
+      ...alt, id: pid, geraetId: g.id, uebungId: u.id, ausgeblendet: alt.ausgeblendet || 'nein',
+      stufenIndex: mitStufen ? Number(r.fields.stufe) : 0, ziel: Math.round(Number(r.fields.wert)),
+      erstesTraining: false, letztesDatum: iso, erfuelltInFolge: 0, easyInFolge: 0, verfehltInFolge: 0,
+    });
+    toast('Stand gespeichert – das nächste Training baut darauf auf.');
+    neu();
+  }));
   view.querySelector('#hab').addEventListener('change', async (e) => { g.vorhanden = e.target.checked; await geraetSpeichern(g); });
   view.querySelectorAll('[data-anz]').forEach((b) => b.addEventListener('click', async () => { g.anzeige = b.dataset.anz; await geraetSpeichern(g); neu(); }));
   const zahlen = (s) => String(s || '').split(/[;\s]+/).map((x) => Number(x.replace(',', '.'))).filter((x) => Number.isFinite(x) && x > 0);

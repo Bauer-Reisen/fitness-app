@@ -1,13 +1,13 @@
 // „Mehr": Backup, Supplements, Wie wird gerechnet, Einstellungen, Hilfe, Weitergeben, Offline, Daten löschen.
-import { kv, backupErstellen, backupLaden, backupPruefen, allesLoeschen } from './db.js?v=0.1.8';
-import { VERSION, APP_NAME } from './config.js?v=0.1.8';
-import { esc, dialog, toast, datum } from './ui.js?v=0.1.8';
-import { shareCard, wireShare } from './teilen.js?v=0.1.8';
-import { installCard } from './install.js?v=0.1.8';
-import { runTour } from './tour.js?v=0.1.8';
-import { NEWS, showNews } from './news.js?v=0.1.8';
-import { refreshOffline } from './offline.js?v=0.1.8';
-import { heuteIso } from './datum.js?v=0.1.8';
+import { kv, backupErstellen, backupLaden, backupPruefen, allesLoeschen } from './db.js?v=0.1.9';
+import { VERSION, APP_NAME } from './config.js?v=0.1.9';
+import { esc, dialog, toast, datum } from './ui.js?v=0.1.9';
+import { shareCard, wireShare } from './teilen.js?v=0.1.9';
+import { installCard } from './install.js?v=0.1.9';
+import { runTour } from './tour.js?v=0.1.9';
+import { NEWS, showNews } from './news.js?v=0.1.9';
+import { refreshOffline } from './offline.js?v=0.1.9';
+import { heuteIso } from './datum.js?v=0.1.9';
 
 // Datei teilen (iPhone: Teilen-Menü → „In Dateien sichern“), sonst herunterladen (wie Bike-App)
 async function dateiTeilen(text, name) {

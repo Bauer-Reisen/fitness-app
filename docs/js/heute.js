@@ -1,16 +1,16 @@
 // Startseite „Heute“: was jetzt dran ist, Muskelkater-Abfrage, Wiedervorlage, Eiweiß heute, Backup-Erinnerung.
-import { alle, kv, speichere, hole } from './db.js?v=0.1.8';
-import { ladeKontext, bedarfFuer } from './kontext.js?v=0.1.8';
-import { planErstellen, nachbefragungAnwenden } from './vorschlag.js?v=0.1.8';
-import { katerFaellig, wiedervorlage, GRUND_TEXT } from './gesundheit.js?v=0.1.8';
-import { GRUPPEN } from './katalog.js?v=0.1.8';
-import { R } from './regeln.js?v=0.1.8';
-import { esc, toast } from './ui.js?v=0.1.8';
-import { installBanner, wireInstall } from './install.js?v=0.1.8';
-import { offlineState } from './offline.js?v=0.1.8';
-import { stundenZwischen, tageZwischen, heuteIso } from './datum.js?v=0.1.8';
-import { trainingStarten } from './lauf.js?v=0.1.8';
-import { shakeErfassen, tagesSumme } from './essen.js?v=0.1.8';
+import { alle, kv, speichere, hole } from './db.js?v=0.1.9';
+import { ladeKontext, bedarfFuer } from './kontext.js?v=0.1.9';
+import { planErstellen, nachbefragungAnwenden } from './vorschlag.js?v=0.1.9';
+import { katerFaellig, wiedervorlage, GRUND_TEXT } from './gesundheit.js?v=0.1.9';
+import { GRUPPEN } from './katalog.js?v=0.1.9';
+import { R } from './regeln.js?v=0.1.9';
+import { esc, toast } from './ui.js?v=0.1.9';
+import { installBanner, wireInstall } from './install.js?v=0.1.9';
+import { offlineState } from './offline.js?v=0.1.9';
+import { stundenZwischen, tageZwischen, heuteIso } from './datum.js?v=0.1.9';
+import { trainingStarten } from './lauf.js?v=0.1.9';
+import { shakeErfassen, tagesSumme } from './essen.js?v=0.1.9';
 
 export async function render(view) {
   const ctx = await ladeKontext();

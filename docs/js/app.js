@@ -1,31 +1,31 @@
 // Einstieg der App: Seitenwechsel, Rundgang beim ersten Öffnen, „Was ist neu?“, Updates, Offline.
-import { VERSION } from './config.js?v=0.1.8';
-import { store } from './store.js?v=0.1.8';
-import { toast } from './ui.js?v=0.1.8';
-import { renderTabs } from './tabs.js?v=0.1.8';
-import { runTour } from './tour.js?v=0.1.8';
-import { unseen, showNews, NEWS } from './news.js?v=0.1.8';
-import { registerSw } from './offline.js?v=0.1.8';
-import { laufendesAufraeumen } from './lauf.js?v=0.1.8';
-import { einstiegAnpassen } from './kontext.js?v=0.1.8';
+import { VERSION } from './config.js?v=0.1.9';
+import { store } from './store.js?v=0.1.9';
+import { toast } from './ui.js?v=0.1.9';
+import { renderTabs } from './tabs.js?v=0.1.9';
+import { runTour } from './tour.js?v=0.1.9';
+import { unseen, showNews, NEWS } from './news.js?v=0.1.9';
+import { registerSw } from './offline.js?v=0.1.9';
+import { laufendesAufraeumen } from './lauf.js?v=0.1.9';
+import { einstiegAnpassen } from './kontext.js?v=0.1.9';
 
 const view = document.getElementById('view');
 const scroller = document.getElementById('scroller'); // nur dieser Bereich scrollt (fester Rahmen)
 
 // Jede Seite ist eine eigene Datei und wird erst beim Öffnen geladen.
 const PAGES = {
-  heute: () => import('./heute.js?v=0.1.8'),
-  training: () => import('./training.js?v=0.1.8'),
-  lauf: () => import('./lauf.js?v=0.1.8'),
-  geraete: () => import('./geraete.js?v=0.1.8'),
-  geraet: () => import('./geraete.js?v=0.1.8').then((m) => ({ render: m.renderGeraet })),
-  essen: () => import('./essen.js?v=0.1.8'),
-  koerper: () => import('./koerperseite.js?v=0.1.8'),
-  gesundheit: () => import('./gesundheitseite.js?v=0.1.8'),
-  profil: () => import('./profil.js?v=0.1.8'),
-  mehr: () => import('./mehr.js?v=0.1.8'),
-  supplemente: () => import('./supplementseite.js?v=0.1.8'),
-  rechnen: () => import('./rechnen.js?v=0.1.8'),
+  heute: () => import('./heute.js?v=0.1.9'),
+  training: () => import('./training.js?v=0.1.9'),
+  lauf: () => import('./lauf.js?v=0.1.9'),
+  geraete: () => import('./geraete.js?v=0.1.9'),
+  geraet: () => import('./geraete.js?v=0.1.9').then((m) => ({ render: m.renderGeraet })),
+  essen: () => import('./essen.js?v=0.1.9'),
+  koerper: () => import('./koerperseite.js?v=0.1.9'),
+  gesundheit: () => import('./gesundheitseite.js?v=0.1.9'),
+  profil: () => import('./profil.js?v=0.1.9'),
+  mehr: () => import('./mehr.js?v=0.1.9'),
+  supplemente: () => import('./supplementseite.js?v=0.1.9'),
+  rechnen: () => import('./rechnen.js?v=0.1.9'),
 };
 
 export async function route() {

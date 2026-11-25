@@ -21,8 +21,8 @@ export const STEPS = [
     text: 'In der <strong>Gesundheitsabfrage</strong> trägst du Gelenke ein, die Rücksicht brauchen, und ärztliche Vorgaben. Die App wählt passende Übungen, blendet vorsorglich manches aus (wieder einblendbar) und plant <strong>gezielte Übungen</strong> für Hüfte und Hand ein.',
   },
   {
-    id: 'geraete', stand: '0.1.4', icon: '🏋️', title: 'Deine Geräte',
-    text: 'Unter <strong>Training → Meine Geräte</strong> stehen die Geräte deines Studios mit ihren Nummern. Stell beim ersten Mal die Gewichtsstufen ein, wie sie am Gerät stehen. Was fehlt oder kaputt ist, nimmst du raus; eigene Geräte legst du mit drei Angaben an.',
+    id: 'geraete', stand: '0.1.9', icon: '🏋️', title: 'Deine Geräte',
+    text: 'Unter <strong>Training → Meine Geräte</strong> stehen die Geräte deines Studios mit ihren Nummern. Stell beim ersten Mal die Gewichtsstufen ein, wie sie am Gerät stehen. Hast du ohne App trainiert, trägst du dort unter „Stand“ ein, was du geschafft hast. Was fehlt oder kaputt ist, nimmst du raus.',
   },
   {
     id: 'essen', stand: '0.1.0', icon: '🥣', title: 'Essen in Sekunden',
@@ -40,6 +40,10 @@ export const STEPS = [
 
 // Neueste zuerst. Nur sichtbare Neuerungen, keine Reparaturen.
 export const NEWS = [
+  {
+    v: '0.1.9', karte: 'geraete', title: 'Stand eintragen',
+    items: ['Ohne App trainiert? Unter <strong>Meine Geräte → Gerät → Stand</strong> trägst du Gewicht und Wiederholungen ein. Die App macht beim nächsten Training von dort aus weiter.'],
+  },
   {
     v: '0.1.6', karte: 'klein', title: 'Klimmzug mit Unterstützung',
     items: ['Geräte 15 und 21 sind jetzt als <strong>Klimmzug-/Dip-Maschine mit Unterstützung</strong> drin: Mehr Gewicht heißt mehr Hilfe. Wird es leichter, nimmt die App beim nächsten Mal weniger Hilfe.'],

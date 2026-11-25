@@ -1,11 +1,11 @@
 // Gesundheitsabfrage (ca. 2 Min.): Warnzeichen, Gelenke/Einschränkungen mit Vorgaben, Wiedervorlage.
 // Die App urteilt nicht medizinisch: Warnzeichen führen nur zu einem Hinweis, nie zu einer Sperre.
-import { alle, speichere, neueId } from './db.js?v=0.1.8';
-import { WARNZEICHEN, letzteAbfrage, neueAbfrage, wiedervorlage, GRUND_TEXT } from './gesundheit.js?v=0.1.8';
-import { STELLEN, ARTEN, VORGABEN } from './gelenke.js?v=0.1.8';
-import { esc, dialog, toast, datum } from './ui.js?v=0.1.8';
-import { heuteIso } from './datum.js?v=0.1.8';
-import { ladeTrainings } from './kontext.js?v=0.1.8';
+import { alle, speichere, neueId } from './db.js?v=0.1.9';
+import { WARNZEICHEN, letzteAbfrage, neueAbfrage, wiedervorlage, GRUND_TEXT } from './gesundheit.js?v=0.1.9';
+import { STELLEN, ARTEN, VORGABEN } from './gelenke.js?v=0.1.9';
+import { esc, dialog, toast, datum } from './ui.js?v=0.1.9';
+import { heuteIso } from './datum.js?v=0.1.9';
+import { ladeTrainings } from './kontext.js?v=0.1.9';
 
 const SEITEN = { links: 'links', rechts: 'rechts', beide: 'beide' };
 let entwurf = null; // Antworten bleiben erhalten, wenn die Seite nach „Körperstelle hinzufügen“ neu gezeichnet wird

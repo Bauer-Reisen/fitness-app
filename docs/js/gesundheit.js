@@ -1,6 +1,6 @@
 // Gesundheitsabfrage: Wiedervorlage und Muskelkater-Karte. Ohne Bildschirm-Code.
-import { R } from './regeln.js?v=0.1.8';
-import { tageZwischen, plusTage, monatIso, stundenZwischen, heuteIso } from './datum.js?v=0.1.8';
+import { R } from './regeln.js?v=0.1.9';
+import { tageZwischen, plusTage, monatIso, stundenZwischen, heuteIso } from './datum.js?v=0.1.9';
 
 export const WARNZEICHEN = {
   herz: 'Hat dir ein Arzt eine Herzerkrankung oder Bluthochdruck festgestellt?',

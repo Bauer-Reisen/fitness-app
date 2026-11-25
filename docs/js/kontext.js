@@ -1,12 +1,12 @@
 // Lädt alles Nötige aus dem Speicher und baut daraus den „Kontext“ für Vorschlag und Bedarf.
-import { alle, kv, speichere } from './db.js?v=0.1.8';
-import { GERAETE, UEBUNGEN } from './katalog.js?v=0.1.8';
-import { stufenAusVorschlag } from './stufen.js?v=0.1.8';
-import { heuteIso, alterAm } from './datum.js?v=0.1.8';
-import { rechenGewicht } from './koerper.js?v=0.1.8';
-import { tagesbedarf, STANDARD_MINUTEN } from './bedarf.js?v=0.1.8';
-import { aktiv } from './gelenke.js?v=0.1.8';
-import { STUDIO, studioLabel } from './studio.js?v=0.1.8';
+import { alle, kv, speichere } from './db.js?v=0.1.9';
+import { GERAETE, UEBUNGEN } from './katalog.js?v=0.1.9';
+import { stufenAusVorschlag } from './stufen.js?v=0.1.9';
+import { heuteIso, alterAm } from './datum.js?v=0.1.9';
+import { rechenGewicht } from './koerper.js?v=0.1.9';
+import { tagesbedarf, STANDARD_MINUTEN } from './bedarf.js?v=0.1.9';
+import { aktiv } from './gelenke.js?v=0.1.9';
+import { STUDIO, studioLabel } from './studio.js?v=0.1.9';
 
 // Studio-Liste an (Standard) oder allgemeine Vorlagen
 export const studioAn = async () => (await kv.get('studio')) !== 'aus';
