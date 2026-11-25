@@ -31,6 +31,18 @@ for (const m of HAUPTMUSTER) {
 }
 for (const z of ['abduktion', 'streckung', 'kontrolle']) pruefe(`Förderziel ${z}`, UEBUNGEN.some(u => u.foerder === z));
 
+// ---------- Studio-Liste ----------
+{
+  const { STUDIO } = await import('../docs/js/studio.js');
+  const ids = new Set();
+  for (const d of STUDIO) {
+    pruefe(`Studiogerät ${d.id} eindeutig`, !ids.has(d.id)); ids.add(d.id);
+    pruefe(`Studiogerät ${d.id}: Vorlage ${d.typ} gibt es`, GERAETE.some((g) => g.id === d.typ));
+    for (const u of d.uebungen || []) pruefe(`Studiogerät ${d.id}: Übung ${u} gibt es`, UEBUNGEN.some((x) => x.id === u));
+  }
+  pruefe('Studio: Nummern 1–33 vollständig', [...Array(33)].every((_, i) => STUDIO.some((d) => d.bereich === 'haupt' && d.nr === i + 1)));
+}
+
 // ---------- Hilfen für Testfälle ----------
 const HEUTE = '2026-12-01';
 const jetzt = new Date(HEUTE + 'T18:00:00').getTime();

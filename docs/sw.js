@@ -4,11 +4,11 @@
 // - Updates: app.js merkt eine neue Version (version.json) und lädt mit ?v=<neu> – das geht übers Netz.
 // - Deine Daten (IndexedDB) werden hier nicht angefasst.
 
-const VERSION = '0.1.3';
+const VERSION = '0.1.4';
 const CACHE = 'fitness-' + VERSION;
 const DATEIEN = [
   './', 'index.html', 'manifest.webmanifest', 'style.css', 'version.json',
-  'js/app.js', 'js/bedarf.js', 'js/config.js', 'js/datum.js', 'js/db.js', 'js/essen.js', 'js/gelenke.js', 'js/geraete.js', 'js/gesundheit.js', 'js/gesundheitseite.js', 'js/heute.js', 'js/hilfe.js', 'js/install.js', 'js/katalog.js', 'js/koerper.js', 'js/koerperseite.js', 'js/kontext.js', 'js/lauf.js', 'js/lebensmittel.js', 'js/mehr.js', 'js/news.js', 'js/offline.js', 'js/profil.js', 'js/rechnen.js', 'js/regeln.js', 'js/store.js', 'js/stufen.js', 'js/supplemente.js', 'js/supplementseite.js', 'js/tabs.js', 'js/teilen.js', 'js/tour.js', 'js/training.js', 'js/ui.js', 'js/vorschlag.js',
+  'js/app.js', 'js/bedarf.js', 'js/config.js', 'js/datum.js', 'js/db.js', 'js/essen.js', 'js/gelenke.js', 'js/geraete.js', 'js/gesundheit.js', 'js/gesundheitseite.js', 'js/heute.js', 'js/hilfe.js', 'js/install.js', 'js/katalog.js', 'js/koerper.js', 'js/koerperseite.js', 'js/kontext.js', 'js/lauf.js', 'js/lebensmittel.js', 'js/mehr.js', 'js/news.js', 'js/offline.js', 'js/profil.js', 'js/rechnen.js', 'js/regeln.js', 'js/store.js', 'js/stufen.js', 'js/studio.js', 'js/supplemente.js', 'js/supplementseite.js', 'js/tabs.js', 'js/teilen.js', 'js/tour.js', 'js/training.js', 'js/ui.js', 'js/vorschlag.js',
   'icons/icon-192.png', 'icons/apple-touch-icon.png', 'icons/qr.svg',
 ];
 

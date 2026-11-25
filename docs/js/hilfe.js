@@ -21,8 +21,8 @@ export const STEPS = [
     text: 'In der <strong>Gesundheitsabfrage</strong> trägst du Gelenke ein, die Rücksicht brauchen, und ärztliche Vorgaben. Die App wählt passende Übungen, blendet vorsorglich manches aus (wieder einblendbar) und plant <strong>gezielte Übungen</strong> für Hüfte und Hand ein.',
   },
   {
-    id: 'geraete', stand: '0.1.0', icon: '🏋️', title: 'Deine Geräte',
-    text: 'Unter <strong>Training → Meine Geräte</strong> hakst du ab, was dein Studio hat, und stellst die Gewichtsstufen ein. Pläne nutzen nur diese Geräte. Eigene Geräte legst du mit drei Angaben an.',
+    id: 'geraete', stand: '0.1.4', icon: '🏋️', title: 'Deine Geräte',
+    text: 'Unter <strong>Training → Meine Geräte</strong> stehen die Geräte deines Studios mit ihren Nummern. Stell beim ersten Mal die Gewichtsstufen ein, wie sie am Gerät stehen. Was fehlt oder kaputt ist, nimmst du raus; eigene Geräte legst du mit drei Angaben an.',
   },
   {
     id: 'essen', stand: '0.1.0', icon: '🥣', title: 'Essen in Sekunden',
@@ -40,6 +40,10 @@ export const STEPS = [
 
 // Neueste zuerst. Nur sichtbare Neuerungen, keine Reparaturen.
 export const NEWS = [
+  {
+    v: '0.1.4', karte: 'geraete', title: 'Dein Studio ist drin',
+    items: ['Unter <strong>Training → Meine Geräte</strong> stehen jetzt alle Geräte deines Studios mit ihren <strong>Nummern</strong> – auch der Gerätepark rot. Im Training siehst du, an welches Gerät du gehst, zum Beispiel „8 · Brustpresse“.', 'Beim ersten Mal an einem Gerät erinnert dich die App, die <strong>Gewichtsstufen</strong> abzulesen und einzutragen.'],
+  },
   {
     v: '0.1.2', karte: 'feedback', title: 'Erster Satz = Test',
     items: ['Bei einer neuen Übung mit Körpergewicht oder Haltezeit ist der <strong>erste Satz ein Test</strong>: so viele saubere Wiederholungen oder Sekunden wie gut gehen, 2–3 vor Schluss aufhören. Die App übernimmt das für die nächsten Sätze und Trainings.'],

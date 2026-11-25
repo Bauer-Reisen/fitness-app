@@ -1,7 +1,7 @@
 // „Wie wird gerechnet?“ – Formeln, Zahlen von heute und Quellen.
-import { bedarfFuer } from './kontext.js?v=0.1.3';
-import { ZIELE, MET_GERAETETRAINING } from './bedarf.js?v=0.1.3';
-import { esc, zahl } from './ui.js?v=0.1.3';
+import { bedarfFuer } from './kontext.js?v=0.1.4';
+import { ZIELE, MET_GERAETETRAINING } from './bedarf.js?v=0.1.4';
+import { esc, zahl } from './ui.js?v=0.1.4';
 
 export async function render(view) {
   const b = await bedarfFuer();

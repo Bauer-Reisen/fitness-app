@@ -1,37 +1,57 @@
 // Meine Geräte: Vorlagen abhaken, Gewichtsstufen und Einstellungen, eigene Geräte, Übungen aus-/einblenden.
-import { alle, hole, speichere, loesche, neueId } from './db.js?v=0.1.3';
-import { ladeGeraete, ladeUebungen } from './kontext.js?v=0.1.3';
-import { MUSTER, BELASTUNGSART, GERAETE } from './katalog.js?v=0.1.3';
-import { stufenAusVorschlag, kombiniert, anzeige } from './stufen.js?v=0.1.3';
-import { paarId } from './vorschlag.js?v=0.1.3';
-import { esc, dialog, toast } from './ui.js?v=0.1.3';
+import { alle, hole, speichere, loesche, neueId, kv } from './db.js?v=0.1.4';
+import { ladeGeraete, ladeUebungen, studioAn } from './kontext.js?v=0.1.4';
+import { BEREICHE, STUDIO_NAME } from './studio.js?v=0.1.4';
+import { MUSTER, BELASTUNGSART, GERAETE } from './katalog.js?v=0.1.4';
+import { stufenAusVorschlag, kombiniert, anzeige } from './stufen.js?v=0.1.4';
+import { paarId } from './vorschlag.js?v=0.1.4';
+import { esc, dialog, toast } from './ui.js?v=0.1.4';
 
 const REIHE = ['druecken', 'ziehen', 'beine', 'rumpf', 'ausdauer'];
 
 async function geraetSpeichern(g) {
-  const felder = { id: g.id, vorhanden: g.vorhanden, stufen: g.stufen, zusatz: g.zusatz, anzeige: g.anzeige, werte: g.werte, notiz: g.notiz, uebungenExtra: g.uebungenExtra };
+  const alt = (await hole('geraete', g.id)) || {};
+  const felder = { ...alt, id: g.id, [g.vorhandenFeld || 'vorhanden']: g.vorhanden, stufen: g.stufen, zusatz: g.zusatz, anzeige: g.anzeige, werte: g.werte, notiz: g.notiz, uebungenExtra: g.uebungenExtra, stufenGeprueft: !!g.stufenGeprueft };
   if (g.eigen) Object.assign(felder, { eigen: true, name: g.name, muster: g.muster, art: g.art, einstellungen: g.einstellungen, vorlageVon: g.vorlageVon || null });
   await speichere('geraete', felder);
 }
 
 export async function render(view) {
   const geraete = await ladeGeraete();
+  const studio = await studioAn();
   const liste = Object.values(geraete);
   const anzahl = liste.filter((g) => g.vorhanden).length;
+  const zeile = (g) => `
+          <li>
+            <label class="check gross"><input type="checkbox" data-hab="${esc(g.id)}" ${g.vorhanden ? 'checked' : ''}><span><strong>${esc(g.name)}</strong>${!g.studio && g.aliase?.length ? `<br><span class="hint">${esc(g.aliase.join(', '))}</span>` : ''}${g.eigen ? ' <span class="tag">eigen</span>' : ''}${g.studio && (g.art === 'kg') && !g.stufenGeprueft && g.vorhanden ? '<br><span class="hint">Gewichtsstufen noch prüfen</span>' : ''}</span></label>
+            <a class="btn klein" href="#/geraet/${encodeURIComponent(g.id)}">Einstellen</a>
+          </li>`;
+  const nachMuster = (arr) => REIHE.map((m) => {
+    const teil = arr.filter((g) => (g.muster === m) || (m === 'rumpf' && !REIHE.includes(g.muster)));
+    return teil.length ? `<h2>${esc(MUSTER[m])}</h2><ul class="liste geraete">${teil.map(zeile).join('')}</ul>` : '';
+  }).join('');
+  const studioListe = Object.entries(BEREICHE).map(([b, titel]) => {
+    const teil = liste.filter((g) => g.studio && g.bereich === b).sort((x, y) => (x.nr ?? 99) - (y.nr ?? 99));
+    return teil.length ? `<h2>${esc(titel)}</h2><ul class="liste geraete">${teil.map(zeile).join('')}</ul>` : '';
+  }).join('');
+  const eigene = liste.filter((g) => g.eigen);
   view.innerHTML = `
     <section>
       <a class="back" href="#/training">← Training</a>
       <h1 class="title title-sm">Meine Geräte</h1>
-      <p class="lead">Hake ab, was dein Studio hat (${anzahl} abgehakt). Antippen zum Einstellen von Gewichten und Sitzhöhe.</p>
-      ${REIHE.map((m) => `
-        <h2>${esc(MUSTER[m])}</h2>
-        <ul class="liste geraete">${liste.filter((g) => (g.muster === m) || (m === 'rumpf' && !REIHE.includes(g.muster))).map((g) => `
-          <li>
-            <label class="check gross"><input type="checkbox" data-hab="${esc(g.id)}" ${g.vorhanden ? 'checked' : ''}><span><strong>${esc(g.name)}</strong>${g.aliase?.length ? `<br><span class="hint">${esc(g.aliase.join(', '))}</span>` : ''}${g.eigen ? ' <span class="tag">eigen</span>' : ''}</span></label>
-            <a class="btn klein" href="#/geraet/${encodeURIComponent(g.id)}">Einstellen</a>
-          </li>`).join('')}</ul>`).join('')}
+      ${studio ? `
+        <p class="lead">${esc(STUDIO_NAME)}: alle Geräte mit Nummer (${anzahl} aktiv). Was kaputt oder weg ist, abhaken. Antippen zum Einstellen von Gewichtsstufen und Sitzhöhe.</p>
+        ${studioListe}
+        ${eigene.length ? `<h2>Eigene Geräte</h2><ul class="liste geraete">${eigene.map(zeile).join('')}</ul>` : ''}
+        <details class="card aufklapp"><summary>Allgemeine Vorlagen (zusätzlich)</summary>${nachMuster(liste.filter((g) => g.allgemein))}</details>`
+      : `<p class="lead">Hake ab, was dein Studio hat (${anzahl} abgehakt). Antippen zum Einstellen von Gewichten und Sitzhöhe.</p>${nachMuster(liste.filter((g) => !g.studio))}`}
       <button type="button" class="btn btn-wide" data-act="neu">+ Eigenes Gerät anlegen</button>
+      <button type="button" class="btn btn-quiet btn-wide" data-act="modus">${studio ? 'Allgemeine Liste statt Studio-Liste verwenden' : `Liste „${esc(STUDIO_NAME)}“ verwenden`}</button>
     </section>`;
+  view.querySelector('[data-act=modus]').addEventListener('click', async () => {
+    await kv.set('studio', studio ? 'aus' : 'an');
+    render(view);
+  });
   view.querySelectorAll('[data-hab]').forEach((c) => c.addEventListener('change', async () => {
     const g = geraete[c.dataset.hab];
     g.vorhanden = c.checked;
@@ -138,6 +158,7 @@ export async function renderGeraet(view, id) {
     if (!neuStufen || neuStufen.length > 200) { toast('Bitte kleinste, Schritt und größte Stufe angeben.'); return; }
     g.stufen = neuStufen;
     g.zusatz = [0, ...zahlen(view.querySelector('#st-zusatz').value)];
+    g.stufenGeprueft = true;
     await geraetSpeichern(g);
     toast('Stufen gespeichert. Bereits gemerkte Gewichte bleiben auf ihrer Stufennummer – bitte beim nächsten Satz prüfen.', 5000);
     neu();

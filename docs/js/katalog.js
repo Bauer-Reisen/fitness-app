@@ -76,6 +76,8 @@ export const UEBUNGEN = [
   { id: 'butterfly', name: 'Butterfly', geraete: ['butterfly'], muster: 'druecken', gruppe: 'brust_schulter', prio: 5, b: m('keiner'), hinweis: 'Mit Unterarmpolster ohne Greifen möglich (je nach Modell).' },
   { id: 'seitheben', name: 'Seitheben an der Maschine', geraete: ['seitheben'], muster: 'druecken', gruppe: 'brust_schulter', prio: 6, b: m('keiner'), hinweis: 'Schulter auf Höhe der Drehachse.' },
   { id: 'trizeps_maschine', name: 'Trizepsdrücken sitzend', geraete: ['trizepsmaschine'], muster: 'druecken', gruppe: 'arme', prio: 7, b: m('druck'), hinweis: 'Ellbogen auf der Drehachse.' },
+  { id: 'crossover_maschine', name: 'Crossover (Brust)', geraete: [], muster: 'druecken', gruppe: 'brust_schulter', prio: 6, b: m('zug_mittel'), hinweis: 'Arme leicht gebeugt vor dem Körper zusammenführen.' },
+  { id: 'dips_maschine', name: 'Dips an der Maschine', geraete: [], muster: 'druecken', gruppe: 'brust_schulter', prio: 4, b: m('druck'), hinweis: 'Schultern unten lassen, nur so weit wie angenehm.' },
   { id: 'trizeps_seil', name: 'Trizepsdrücken am Seil', geraete: ['kabelzug'], muster: 'druecken', gruppe: 'arme', prio: 8, b: m('zug_mittel'), hinweis: 'Rolle oben, Ellbogen am Körper.' },
   // ---- Ziehen ----
   { id: 'latzug', name: 'Latzug', geraete: ['latzug'], muster: 'ziehen', gruppe: 'ruecken', prio: 1, b: m('zug_stark', 'mittel'), hinweis: 'Zur oberen Brust ziehen, Schultern unten.' },

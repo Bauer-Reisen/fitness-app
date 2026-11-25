@@ -1,21 +1,27 @@
 // Lädt alles Nötige aus dem Speicher und baut daraus den „Kontext“ für Vorschlag und Bedarf.
-import { alle, kv, speichere } from './db.js?v=0.1.3';
-import { GERAETE, UEBUNGEN } from './katalog.js?v=0.1.3';
-import { stufenAusVorschlag } from './stufen.js?v=0.1.3';
-import { heuteIso, alterAm } from './datum.js?v=0.1.3';
-import { rechenGewicht } from './koerper.js?v=0.1.3';
-import { tagesbedarf, STANDARD_MINUTEN } from './bedarf.js?v=0.1.3';
-import { aktiv } from './gelenke.js?v=0.1.3';
+import { alle, kv, speichere } from './db.js?v=0.1.4';
+import { GERAETE, UEBUNGEN } from './katalog.js?v=0.1.4';
+import { stufenAusVorschlag } from './stufen.js?v=0.1.4';
+import { heuteIso, alterAm } from './datum.js?v=0.1.4';
+import { rechenGewicht } from './koerper.js?v=0.1.4';
+import { tagesbedarf, STANDARD_MINUTEN } from './bedarf.js?v=0.1.4';
+import { aktiv } from './gelenke.js?v=0.1.4';
+import { STUDIO, studioLabel } from './studio.js?v=0.1.4';
+
+// Studio-Liste an (Standard) oder allgemeine Vorlagen
+export const studioAn = async () => (await kv.get('studio')) !== 'aus';
 
 export async function ladeGeraete() {
   const gespeichert = await alle('geraete');
   const map = new Map(gespeichert.map((g) => [g.id, g]));
   const out = {};
+  const studio = await studioAn();
   for (const v of GERAETE) {
     const s = map.get(v.id) || {};
+    const feld = studio ? 'vorhandenAllgemein' : 'vorhanden';
     out[v.id] = {
-      ...v, vorlage: true,
-      vorhanden: s.vorhanden ?? !!v.standard,
+      ...v, vorlage: true, allgemein: true, vorhandenFeld: feld,
+      vorhanden: studio ? (s.vorhandenAllgemein ?? false) : (s.vorhanden ?? !!v.standard),
       stufen: s.stufen ?? stufenAusVorschlag(v.stufen),
       zusatz: s.zusatz ?? [0],
       anzeige: s.anzeige ?? 'kg',
@@ -24,7 +30,20 @@ export async function ladeGeraete() {
       uebungenExtra: s.uebungenExtra ?? [],
     };
   }
-  for (const s of gespeichert) if (s.eigen) out[s.id] = { werte: {}, zusatz: [0], anzeige: 'kg', uebungenExtra: [], ...s };
+  if (studio) {
+    for (const d of STUDIO) {
+      const v = GERAETE.find((x) => x.id === d.typ);
+      const s = map.get(d.id) || {};
+      out[d.id] = {
+        ...v, id: d.id, nr: d.nr, bereich: d.bereich, typ: d.typ, name: studioLabel(d), kurzname: d.name, aliase: v.aliase,
+        studio: true, vorlage: true, vorhandenFeld: 'vorhanden', vorhanden: s.vorhanden ?? true,
+        stufen: s.stufen ?? stufenAusVorschlag(v.stufen), stufenGeprueft: s.stufenGeprueft ?? false,
+        zusatz: s.zusatz ?? [0], anzeige: s.anzeige ?? 'kg', werte: s.werte ?? {}, notiz: s.notiz ?? '',
+        uebungenExtra: [...new Set([...(d.uebungen || UEBUNGEN.filter((u) => u.geraete.includes(d.typ)).map((u) => u.id)), ...(s.uebungenExtra || [])])],
+      };
+    }
+  }
+  for (const s of gespeichert) if (s.eigen) out[s.id] = { werte: {}, zusatz: [0], anzeige: 'kg', uebungenExtra: [], vorhandenFeld: 'vorhanden', ...s };
   return out;
 }
 
