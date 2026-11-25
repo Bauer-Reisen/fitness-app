@@ -102,7 +102,7 @@ export async function renderGeraet(view, id) {
   const uebungen = (await ladeUebungen(geraete)).filter((u) => u.geraete.includes(g.id));
   const staende = Object.fromEntries((await alle('geraetUebung')).map((s) => [s.id, s]));
   const hatStufen = g.art === 'kg' || g.art === 'ball';
-  const stufen = kombiniert(g);
+  const stufen = [...kombiniert(g)].sort((a, b) => a - b); // Eingabefelder immer aufsteigend (auch bei Unterstützung)
 
   view.innerHTML = `
     <section>
@@ -122,7 +122,7 @@ export async function renderGeraet(view, id) {
           </div>
           <label class="form">Oder frei, mit Leerzeichen getrennt (z. B. 5 10 15 22,5)<input type="text" id="st-frei" value="${esc((g.stufen || []).join(' ').replace(/\./g, ','))}"></label>
           <label class="form">Zusatzgewicht zum Aufstecken (z. B. 2,5) – leer lassen, wenn es keins gibt<input type="text" id="st-zusatz" value="${esc((g.zusatz || []).filter((z) => z).join(' ').replace(/\./g, ','))}"></label>
-          <p class="hint" id="st-vorschau">${stufen.length} Stufen: ${esc(stufen.slice(0, 8).map((_, i) => anzeige(g, i)).join(', '))}${stufen.length > 8 ? ' …' : ''}</p>
+          <p class="hint" id="st-vorschau">${g.umgekehrt ? 'Mehr Gewicht = mehr Hilfe = leichter. ' : ''}${stufen.length} Stufen: ${esc(kombiniert(g).slice(0, 8).map((_, i) => anzeige(g, i)).join(', '))}${stufen.length > 8 ? ' …' : ''}</p>
           <button type="button" class="btn btn-primary" data-act="stufen">Stufen speichern</button>
         </div>` : ''}
 
