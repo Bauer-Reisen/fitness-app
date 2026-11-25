@@ -89,9 +89,9 @@ const satz = (stufenIndex, wdh, feedback, schmerz = null) => ({ stufenIndex, wdh
   pruefe('Förderung wechselt (2. Training: Streckung)', plan2.schritte.find(s => s.rolle === 'foerder')?.foerderZiel === 'streckung');
   const ids2 = plan.schritte.filter(s => s.typ === 'uebung').map(s => s.uebungId);
   pruefe('keine Übung doppelt', new Set(ids2).size === ids2.length);
-  // Gelenkeintrag → Einstieg wie neu, auch bei Erfahrung „aktuell“
+  // Gelenkeintrag verlängert den Einstieg nicht (Wunsch Nutzer: Feedback statt Vorsicht von vornherein)
   const st = neuerStand(U('beinpresse'), ctx.geraete.beinpresse, 'haupt', { ...ctx, profil: { erfahrung: { beine: 'aktuell' } } });
-  pruefe('Gelenkeintrag: Einstieg 14 Tage', st.einstiegBis === plusTage(HEUTE, 14), st.einstiegBis);
+  pruefe('Gelenkeintrag: Einstieg nach Erfahrung (aktuell = keiner)', st.einstiegBis === HEUTE, st.einstiegBis);
 }
 {
   const ctx = ctxBasis({ profil: { erfahrung: { druecken: 'frueher' } } });

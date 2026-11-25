@@ -1,30 +1,31 @@
 // Einstieg der App: Seitenwechsel, Rundgang beim ersten Öffnen, „Was ist neu?“, Updates, Offline.
-import { VERSION } from './config.js?v=0.1.2';
-import { store } from './store.js?v=0.1.2';
-import { toast } from './ui.js?v=0.1.2';
-import { renderTabs } from './tabs.js?v=0.1.2';
-import { runTour } from './tour.js?v=0.1.2';
-import { unseen, showNews, NEWS } from './news.js?v=0.1.2';
-import { registerSw } from './offline.js?v=0.1.2';
-import { laufendesAufraeumen } from './lauf.js?v=0.1.2';
+import { VERSION } from './config.js?v=0.1.3';
+import { store } from './store.js?v=0.1.3';
+import { toast } from './ui.js?v=0.1.3';
+import { renderTabs } from './tabs.js?v=0.1.3';
+import { runTour } from './tour.js?v=0.1.3';
+import { unseen, showNews, NEWS } from './news.js?v=0.1.3';
+import { registerSw } from './offline.js?v=0.1.3';
+import { laufendesAufraeumen } from './lauf.js?v=0.1.3';
+import { einstiegAnpassen } from './kontext.js?v=0.1.3';
 
 const view = document.getElementById('view');
 const scroller = document.getElementById('scroller'); // nur dieser Bereich scrollt (fester Rahmen)
 
 // Jede Seite ist eine eigene Datei und wird erst beim Öffnen geladen.
 const PAGES = {
-  heute: () => import('./heute.js?v=0.1.2'),
-  training: () => import('./training.js?v=0.1.2'),
-  lauf: () => import('./lauf.js?v=0.1.2'),
-  geraete: () => import('./geraete.js?v=0.1.2'),
-  geraet: () => import('./geraete.js?v=0.1.2').then((m) => ({ render: m.renderGeraet })),
-  essen: () => import('./essen.js?v=0.1.2'),
-  koerper: () => import('./koerperseite.js?v=0.1.2'),
-  gesundheit: () => import('./gesundheitseite.js?v=0.1.2'),
-  profil: () => import('./profil.js?v=0.1.2'),
-  mehr: () => import('./mehr.js?v=0.1.2'),
-  supplemente: () => import('./supplementseite.js?v=0.1.2'),
-  rechnen: () => import('./rechnen.js?v=0.1.2'),
+  heute: () => import('./heute.js?v=0.1.3'),
+  training: () => import('./training.js?v=0.1.3'),
+  lauf: () => import('./lauf.js?v=0.1.3'),
+  geraete: () => import('./geraete.js?v=0.1.3'),
+  geraet: () => import('./geraete.js?v=0.1.3').then((m) => ({ render: m.renderGeraet })),
+  essen: () => import('./essen.js?v=0.1.3'),
+  koerper: () => import('./koerperseite.js?v=0.1.3'),
+  gesundheit: () => import('./gesundheitseite.js?v=0.1.3'),
+  profil: () => import('./profil.js?v=0.1.3'),
+  mehr: () => import('./mehr.js?v=0.1.3'),
+  supplemente: () => import('./supplementseite.js?v=0.1.3'),
+  rechnen: () => import('./rechnen.js?v=0.1.3'),
 };
 
 export async function route() {
@@ -88,7 +89,8 @@ document.addEventListener('visibilitychange', () => {
 
 registerSw();
 checkForUpdate();
-laufendesAufraeumen()
+einstiegAnpassen()
+  .then(laufendesAufraeumen)
   .then(route)
   .then(helpOnStart)
   .catch((ex) => { console.error(ex); toast('Da ist etwas schiefgelaufen.'); });

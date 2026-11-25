@@ -1,9 +1,9 @@
 // Profil: Werte für Bedarf und Startprofil (Erfahrung je Muster).
-import { alle, speichere, neueId } from './db.js?v=0.1.2';
-import { ALLTAG, ZIELE } from './bedarf.js?v=0.1.2';
-import { MUSTER } from './katalog.js?v=0.1.2';
-import { esc, toast } from './ui.js?v=0.1.2';
-import { heuteIso } from './datum.js?v=0.1.2';
+import { alle, speichere, neueId } from './db.js?v=0.1.3';
+import { ALLTAG, ZIELE } from './bedarf.js?v=0.1.3';
+import { MUSTER } from './katalog.js?v=0.1.3';
+import { esc, toast } from './ui.js?v=0.1.3';
+import { heuteIso } from './datum.js?v=0.1.3';
 
 const ERFAHRUNG = { neu: 'neu', frueher: 'früher regelmäßig', aktuell: 'aktuell regelmäßig' };
 const AUSDAUER = { 5: 'unter 10 Min.', 20: '10–30 Min.', 45: '30–60 Min.', 90: 'über 60 Min.' };
@@ -29,7 +29,7 @@ export async function render(view) {
         <span class="label">Ziel</span>${radio('ziel', Object.fromEntries(Object.entries(ZIELE).map(([k, z]) => [k, z.name])), p.ziel)}
         <p class="hint"><strong>Fett ab, Muskeln auf:</strong> nur wenig unter dem Bedarf essen und viel Eiweiß – das Gewicht bleibt etwa gleich, die Taille wird schmaler. Fett wird dabei nicht zu Muskel, aber beides passiert gleichzeitig.</p>
         <h2>Trainingserfahrung</h2>
-        <p class="hint">Bestimmt, wie lange der vorsichtige Einstieg dauert (neu 14 Tage, früher 7 Tage, aktuell keiner). Wo ein Gelenk Rücksicht braucht, steigt die App immer vorsichtig ein.</p>
+        <p class="hint">Bestimmt, wie lange der vorsichtige Einstieg dauert (neu 14 Tage, früher 7 Tage, aktuell keiner). Gelenke bremsen nicht von vornherein – das macht dein Feedback (Schmerz, Gelenk am Tag danach).</p>
         ${['druecken', 'ziehen', 'beine', 'rumpf'].map((m) => `<span class="label">${esc(MUSTER[m])}</span>${radio('erf-' + m, ERFAHRUNG, p.erfahrung?.[m] || 'neu')}`).join('')}
         <span class="label">Wie lange schaffst du locker Rad oder Laufband am Stück?</span>${radio('ausdauerMinuten', AUSDAUER, p.ausdauerMinuten || 5)}
         <p class="error" role="alert"></p>

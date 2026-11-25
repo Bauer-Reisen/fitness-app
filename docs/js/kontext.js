@@ -1,11 +1,11 @@
 // Lädt alles Nötige aus dem Speicher und baut daraus den „Kontext“ für Vorschlag und Bedarf.
-import { alle, kv } from './db.js?v=0.1.2';
-import { GERAETE, UEBUNGEN } from './katalog.js?v=0.1.2';
-import { stufenAusVorschlag } from './stufen.js?v=0.1.2';
-import { heuteIso, alterAm } from './datum.js?v=0.1.2';
-import { rechenGewicht } from './koerper.js?v=0.1.2';
-import { tagesbedarf, STANDARD_MINUTEN } from './bedarf.js?v=0.1.2';
-import { aktiv } from './gelenke.js?v=0.1.2';
+import { alle, kv, speichere } from './db.js?v=0.1.3';
+import { GERAETE, UEBUNGEN } from './katalog.js?v=0.1.3';
+import { stufenAusVorschlag } from './stufen.js?v=0.1.3';
+import { heuteIso, alterAm } from './datum.js?v=0.1.3';
+import { rechenGewicht } from './koerper.js?v=0.1.3';
+import { tagesbedarf, STANDARD_MINUTEN } from './bedarf.js?v=0.1.3';
+import { aktiv } from './gelenke.js?v=0.1.3';
 
 export async function ladeGeraete() {
   const gespeichert = await alle('geraete');
@@ -91,4 +91,23 @@ export async function bedarfFuer(datum = heuteIso()) {
     alltag: p.alltagsfaktor || 1.4, ziel: p.ziel || 'halten', trainingMinuten: minuten,
   });
   return b ? { ...b, kg, minuten, geplant } : null;
+}
+
+// Einmalig (ab 0.1.3): Einstieg bestehender Übungen auf die Erfahrung im Profil kürzen –
+// vorher hat ein Gelenkeintrag den Einstieg auf 14 Tage verlängert.
+export async function einstiegAnpassen() {
+  if (await kv.get('einstiegAngepasst')) return;
+  const [profile, staende] = await Promise.all([alle('profil'), alle('geraetUebung')]);
+  const erf = profile[0]?.erfahrung || {};
+  const muster = Object.fromEntries(UEBUNGEN.map((u) => [u.id, u.muster === 'foerderung' ? 'beine' : u.muster]));
+  const TAGE = { neu: 14, frueher: 7, aktuell: 0 };
+  for (const s of staende) {
+    if (!s.einstiegBis) continue;
+    const tage = TAGE[erf[muster[s.uebungId]] || 'neu'];
+    const start = s.letztesDatum || heuteIso();
+    const d = new Date(start + 'T12:00:00'); d.setDate(d.getDate() + tage);
+    const bis = heuteIso(d);
+    if (bis < s.einstiegBis) await speichere('geraetUebung', { ...s, einstiegBis: bis });
+  }
+  await kv.set('einstiegAngepasst', true);
 }

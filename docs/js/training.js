@@ -1,12 +1,12 @@
 // Reiter Training: heutiger Vorschlag, Start/Fortsetzen, Verlauf, ausgeblendete Übungen, Link zu den Geräten.
-import { speichere } from './db.js?v=0.1.2';
-import { ladeKontext } from './kontext.js?v=0.1.2';
-import { planErstellen } from './vorschlag.js?v=0.1.2';
-import { anzeige } from './stufen.js?v=0.1.2';
-import { esc } from './ui.js?v=0.1.2';
-import { datumKurz } from './datum.js?v=0.1.2';
-import { trainingStarten } from './lauf.js?v=0.1.2';
-import { bewerte } from './gelenke.js?v=0.1.2';
+import { speichere } from './db.js?v=0.1.3';
+import { ladeKontext } from './kontext.js?v=0.1.3';
+import { planErstellen } from './vorschlag.js?v=0.1.3';
+import { anzeige } from './stufen.js?v=0.1.3';
+import { esc } from './ui.js?v=0.1.3';
+import { datumKurz } from './datum.js?v=0.1.3';
+import { trainingStarten } from './lauf.js?v=0.1.3';
+import { bewerte } from './gelenke.js?v=0.1.3';
 
 export async function render(view) {
   const ctx = await ladeKontext();

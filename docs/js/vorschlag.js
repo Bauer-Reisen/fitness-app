@@ -1,9 +1,9 @@
 // Trainingsvorschlag und Steigerung (docs/ANFORDERUNGEN.md, Abschnitt 1a und 1c). Ohne Bildschirm-Code.
-import { R } from './regeln.js?v=0.1.2';
-import { HAUPTMUSTER, MUSTER } from './katalog.js?v=0.1.2';
-import { bewerte, hueftEintraege, handEintraege, aktiv, STELLE_MUSTER } from './gelenke.js?v=0.1.2';
-import { kombiniert, sprung, anzeige } from './stufen.js?v=0.1.2';
-import { plusTage, tageZwischen, stundenZwischen } from './datum.js?v=0.1.2';
+import { R } from './regeln.js?v=0.1.3';
+import { HAUPTMUSTER, MUSTER } from './katalog.js?v=0.1.3';
+import { bewerte, hueftEintraege, handEintraege } from './gelenke.js?v=0.1.3';
+import { kombiniert, sprung, anzeige } from './stufen.js?v=0.1.3';
+import { plusTage, tageZwischen, stundenZwischen } from './datum.js?v=0.1.3';
 
 export const paarId = (geraetId, uebungId) => `${geraetId}:${uebungId}`;
 
@@ -21,18 +21,11 @@ export function bereichVon(typ, rolle, stand = {}) {
 
 const hatStufen = typ => typ === 'kg' || typ === 'ball';
 
-// Muster mit Gelenkeintrag → Einstieg wie „neu“
-function gelenkMuster(einschraenkungen) {
-  const set = new Set();
-  for (const e of aktiv(einschraenkungen)) for (const m of STELLE_MUSTER[e.stelle] || []) set.add(m);
-  return set;
-}
-
 export function neuerStand(uebung, geraet, rolle, ctx) {
   const typ = typVon(uebung, geraet);
   const muster = uebung.muster === 'foerderung' ? 'beine' : uebung.muster;
   let erfahrung = ctx.profil?.erfahrung?.[muster] || 'neu';
-  if (gelenkMuster(ctx.einschraenkungen).has(uebung.muster) || gelenkMuster(ctx.einschraenkungen).has(muster)) erfahrung = 'neu';
+  // Gelenkeinträge verlängern den Einstieg nicht – gebremst wird über das Feedback (Schmerz, Gelenk am Folgetag).
   const tage = R.einstiegTage[erfahrung] ?? R.einstiegTage.neu;
   const bereich = bereichVon(typ, rolle);
   let ziel = typ === 'zeit' ? R.zeit.start : typ === 'koerper' ? R.koerper.start : Math.min(bereich.max, Math.max(bereich.min, 10));

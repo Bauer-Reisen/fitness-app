@@ -1,9 +1,9 @@
 // Reiter Körper: Gewicht (7-Tage-Mittel), Umfänge, Unverträglichkeiten, Links zu Profil und Gesundheit.
-import { alle, speichere, loesche, neueId } from './db.js?v=0.1.2';
-import { mittel7, letzteMessung, MESSARTEN, MIN_WIEGUNGEN, UMFAENGE, verlauf } from './koerper.js?v=0.1.2';
-import { aktiv, STELLEN, ARTEN } from './gelenke.js?v=0.1.2';
-import { esc, toast, dialog, zahl, datum } from './ui.js?v=0.1.2';
-import { heuteIso, alterAm, plusTage } from './datum.js?v=0.1.2';
+import { alle, speichere, loesche, neueId } from './db.js?v=0.1.3';
+import { mittel7, letzteMessung, MESSARTEN, MIN_WIEGUNGEN, UMFAENGE, verlauf } from './koerper.js?v=0.1.3';
+import { aktiv, STELLEN, ARTEN } from './gelenke.js?v=0.1.3';
+import { esc, toast, dialog, zahl, datum } from './ui.js?v=0.1.3';
+import { heuteIso, alterAm, plusTage } from './datum.js?v=0.1.3';
 
 export async function render(view) {
   const heute = heuteIso();
